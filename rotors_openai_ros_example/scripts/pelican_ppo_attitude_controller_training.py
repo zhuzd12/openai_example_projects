@@ -5,7 +5,7 @@ import time
 from distutils.dir_util import copy_tree
 import os
 import json
-import single_thread_ppo
+import ppo
 
 import random
 import numpy as np
@@ -21,8 +21,8 @@ from keras.layers.pooling import MaxPooling2D
 from keras.regularizers import l2
 from keras.optimizers import SGD , Adam
 import memory
-from openai_ros.task_envs.pelican import pelican_controller
-from openai_ros.task_envs.pelican import pelican_willowgarage
+from openai_ros.task_envs.pelican import pelican_attitude_controller
+
 # ROS packages required
 import rospy
 import rospkg
@@ -38,28 +38,27 @@ def clear_monitor_files(training_dir):
         os.unlink(file)
 
 if __name__ == '__main__':
-    rospy.init_node('pelican_ppo_controller_training', anonymous=True, log_level=rospy.WARN)
-    env = gym.make('PelicanNavWillowgarageEnv-v0')
+    rospy.init_node('pelican_ppo_attitude_controller_training', anonymous=True, log_level=rospy.WARN)
+    env = gym.make('PelicanAttControllerEnv-v0')
     rospy.loginfo("Gym environment done")
     outdir = '/tmp/openai_ros_experiments/'
 
     continue_execution = False
     #fill this if continue_execution=True
-    weights_path = '/tmp/pelican_willowgarage_ppo_ep200.h5'
-    monitor_path = '/tmp/pelican_willowgarag_ppo_ep200'
-    params_json  = '/tmp/pelican_willowgarag_ppo_ep200.json'
+    weights_path = '/tmp/pelican_AttController_ppo_ep200.h5'
+    monitor_path = '/tmp/pelican_AttController_ppo_ep200'
+    params_json  = '/tmp/pelican_AttController_ppo_ep200.json'
 
     A_DIM = env.unwrapped.a_dim
     S_DIM = env.unwrapped.s_dim
     epochs = 100000
     episode_steps = 500
-    propeller_hovering_speed = rospy.get_param("/pelican/propeller_hovering_speed")
 
     if not continue_execution:
         minibatch_size = 32
-        A_learningRate = 1e-4
-        C_learningRate = 2e-4
-        discountFactor = 0.9
+        A_learningRate = 1e-3
+        C_learningRate = 2e-3
+        discountFactor = 0.99
         explorationRate = 1
         memorySize = 1000000
         learnStart = 64
@@ -87,7 +86,7 @@ if __name__ == '__main__':
         clear_monitor_files(outdir)
         copy_tree(monitor_path, outdir)
         env = gym.wrappers.Monitor(env, outdir, resume=True)
-    ppo = single_thread_ppo.PPO(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, A_LR=A_learningRate, C_LR=C_learningRate,BATCH=minibatch_size, propeller_hovering_speed=propeller_hovering_speed)
+    ppo = ppo.PPO(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, A_LR=A_learningRate, C_LR=C_learningRate,BATCH=minibatch_size, propeller_hovering_speed=0.0)
     last100Rewards = [0] * 100
     last100RewardsIndex = 0
     last100Filled = False

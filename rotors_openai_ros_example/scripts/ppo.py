@@ -105,20 +105,25 @@ class PPO(object):
         # update critic
         [self.sess.run(self.ctrain_op, {self.tfs: s, self.tfdc_r: r}) for _ in range(self.C_UPDATE_STEP)]
 
+
     def _build_anet(self, name, trainable):
         with tf.variable_scope(name):
             l1 = tf.layers.dense(self.tfs, 50, tf.nn.relu, trainable=trainable)
-            deviation = tf.constant(self.propeller_hovering_speed, dtype=tf.float32, shape=(4,))
-            mu = 500 * tf.layers.dense(l1, self.A_DIM, tf.nn.tanh, trainable=trainable)
-            sigma = tf.layers.dense(l1, self.A_DIM, tf.nn.softplus, trainable=trainable)
+            deviation = tf.constant(self.propeller_hovering_speed, dtype=tf.float32, shape=(self.A_DIM,))
+            p_mu_k =  tf.constant([5.0, 1.57, 1.57], dtype=tf.float32, shape=(self.A_DIM-1,))
+            sigma_k =  tf.constant([0.5, 0.3, 0.3, 5.0], dtype=tf.float32, shape=(self.A_DIM,))
+            p_mu = p_mu_k * tf.layers.dense(l1, self.A_DIM-1, tf.nn.tanh, trainable=trainable)
+            thrust_layer = 20.0 * tf.layers.dense(l1, 1, tf.nn.sigmoid, trainable=trainable)
+            mu = tf.concat([p_mu, thrust_layer], axis = 1)
+            sigma = sigma_k * tf.layers.dense(l1, self.A_DIM, tf.nn.softplus, trainable=trainable)
             norm_dist = tf.distributions.Normal(loc=mu+deviation, scale=sigma)
         params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=name)
         return norm_dist, params
-    
+
     def choose_action(self, s):
         s = s[np.newaxis, :]
         a = self.sess.run(self.sample_op, {self.tfs: s})[0]
-        return np.clip(a, 0, 1500)
+        return np.clip(a, [-5.0, -1.57, -1.57, 0.0], [5.0, 1.57, 1.57, 20])
 
         # select the action with the highest Q value
     def selectAction(self, s, explorationRate, env):

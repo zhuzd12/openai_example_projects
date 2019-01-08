@@ -22,7 +22,7 @@ from keras.regularizers import l2
 from keras.optimizers import SGD , Adam
 import memory
 from openai_ros.task_envs.pelican import pelican_controller
-from openai_ros.task_envs.pelican import pelican_willowgarage
+
 # ROS packages required
 import rospy
 import rospkg
@@ -38,16 +38,16 @@ def clear_monitor_files(training_dir):
         os.unlink(file)
 
 if __name__ == '__main__':
-    rospy.init_node('pelican_ppo_controller_training', anonymous=True, log_level=rospy.WARN)
-    env = gym.make('PelicanNavWillowgarageEnv-v0')
+    rospy.init_node('pelican_ppo_controller_training2', anonymous=True, log_level=rospy.WARN)
+    env = gym.make('PelicanNavControllerEnv-v0')
     rospy.loginfo("Gym environment done")
     outdir = '/tmp/openai_ros_experiments/'
 
     continue_execution = False
     #fill this if continue_execution=True
-    weights_path = '/tmp/pelican_willowgarage_ppo_ep200.h5'
-    monitor_path = '/tmp/pelican_willowgarag_ppo_ep200'
-    params_json  = '/tmp/pelican_willowgarag_ppo_ep200.json'
+    weights_path = '/tmp/pelican_Controller_ppo_ep200.h5'
+    monitor_path = '/tmp/pelican_Controller_ppo_ep200'
+    params_json  = '/tmp/pelican_Controller_ppo_ep200.json'
 
     A_DIM = env.unwrapped.a_dim
     S_DIM = env.unwrapped.s_dim

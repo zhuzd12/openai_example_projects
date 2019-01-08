@@ -5,7 +5,7 @@ import time
 from distutils.dir_util import copy_tree
 import os
 import json
-import single_thread_ppo
+import ppo
 
 import random
 import numpy as np
@@ -21,11 +21,22 @@ from keras.layers.pooling import MaxPooling2D
 from keras.regularizers import l2
 from keras.optimizers import SGD , Adam
 import memory
-from openai_ros.task_envs.pelican import pelican_controller
-from openai_ros.task_envs.pelican import pelican_willowgarage
+from openai_ros.task_envs.pelican import pelican_attitude_controller
+from planning_msgs.srv import AttitudeControllerService
+import pyquaternion
 # ROS packages required
 import rospy
 import rospkg
+from geometry_msgs.msg import PoseStamped
+
+def call_mpc(env, mpc_service):
+    odo = env.unwrapped.get_odom()
+    target_pose = env.unwrapped.get_target_pose()
+    try:
+        res = mpc_service(odo, target_pose)
+    except (rospy.ServiceException) as e:
+        print("/pelican/call_nlmpc_controller service call failed")
+    return [res.cmd.yaw_rate, res.cmd.roll, res.cmd.pitch, res.cmd.thrust.z]
 
 def detect_monitor_files(training_dir):
     return [os.path.join(training_dir, f) for f in os.listdir(training_dir) if f.startswith('openaigym')]
@@ -38,22 +49,22 @@ def clear_monitor_files(training_dir):
         os.unlink(file)
 
 if __name__ == '__main__':
-    rospy.init_node('pelican_ppo_controller_training', anonymous=True, log_level=rospy.WARN)
-    env = gym.make('PelicanNavWillowgarageEnv-v0')
+    rospy.init_node('pelican_ppo_attitude_controller_training', anonymous=True, log_level=rospy.WARN)
+    env = gym.make('PelicanAttControllerEnv-v0')
     rospy.loginfo("Gym environment done")
     outdir = '/tmp/openai_ros_experiments/'
+    call_nlmpc = rospy.ServiceProxy('/pelican/call_nlmpc_controller', AttitudeControllerService)
 
     continue_execution = False
     #fill this if continue_execution=True
-    weights_path = '/tmp/pelican_willowgarage_ppo_ep200.h5'
-    monitor_path = '/tmp/pelican_willowgarag_ppo_ep200'
-    params_json  = '/tmp/pelican_willowgarag_ppo_ep200.json'
+    weights_path = '/tmp/pelican_AttController_ppo_ep200.h5'
+    monitor_path = '/tmp/pelican_AttController_ppo_ep200'
+    params_json  = '/tmp/pelican_AttController_ppo_ep200.json'
 
     A_DIM = env.unwrapped.a_dim
     S_DIM = env.unwrapped.s_dim
     epochs = 100000
     episode_steps = 500
-    propeller_hovering_speed = rospy.get_param("/pelican/propeller_hovering_speed")
 
     if not continue_execution:
         minibatch_size = 32
@@ -87,7 +98,7 @@ if __name__ == '__main__':
         clear_monitor_files(outdir)
         copy_tree(monitor_path, outdir)
         env = gym.wrappers.Monitor(env, outdir, resume=True)
-    ppo = single_thread_ppo.PPO(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, A_LR=A_learningRate, C_LR=C_learningRate,BATCH=minibatch_size, propeller_hovering_speed=propeller_hovering_speed)
+    ppo = ppo.PPO(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, A_LR=A_learningRate, C_LR=C_learningRate,BATCH=minibatch_size, propeller_hovering_speed=0.0)
     last100Rewards = [0] * 100
     last100RewardsIndex = 0
     last100Filled = False
@@ -103,9 +114,10 @@ if __name__ == '__main__':
         # number of timesteps
         for t in range(episode_steps):
 
-            #action = env.action_space.sample()
-            action = ppo.choose_action(np.array(observation))
-            #print("action: ", action)
+            # action = env.action_space.sample()
+            # action = ppo.choose_action(np.array(observation))
+            action = call_mpc(env, call_nlmpc)
+            # print("action: ", action)
             newObservation, reward, done, info = env.step(action)
             buffer_s.append(observation)
             buffer_a.append(action)
@@ -140,9 +152,9 @@ if __name__ == '__main__':
                 m, s = divmod(int(time.time() - start_time + loadsim_seconds), 60)
                 h, m = divmod(m, 60)
                 if not last100Filled:
-                    print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - CReward: " + str(round(cumulated_reward, 2)) + "  Time: %d:%02d:%02d" % (h, m, s))
+                    print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - CReward: " + str(round(cumulated_reward, 4)) + "  Time: %d:%02d:%02d" % (h, m, s))
                 else:
-                    print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - last100 C_Rewards : " + str(int((sum(last100Rewards) / len(last100Rewards)))) + " - CReward: " + str(round(cumulated_reward, 2)) + "  Eps=" + str(round(explorationRate, 2)) + "  Time: %d:%02d:%02d" % (h, m, s))
+                    print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - last100 C_Rewards : " + str(int((sum(last100Rewards) / len(last100Rewards)))) + " - CReward: " + str(round(cumulated_reward, 4)) + "  Eps=" + str(round(explorationRate, 2)) + "  Time: %d:%02d:%02d" % (h, m, s))
                     # SAVE SIMULATION DATA
                     if (epoch)%100==0:
                         #save model weights and monitoring data every 100 epochs.

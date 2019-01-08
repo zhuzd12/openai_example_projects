@@ -5,7 +5,7 @@ import time
 from distutils.dir_util import copy_tree
 import os
 import json
-import single_thread_ppo
+import ddpg
 
 import random
 import numpy as np
@@ -21,8 +21,8 @@ from keras.layers.pooling import MaxPooling2D
 from keras.regularizers import l2
 from keras.optimizers import SGD , Adam
 import memory
-from openai_ros.task_envs.pelican import pelican_controller
-from openai_ros.task_envs.pelican import pelican_willowgarage
+from openai_ros.task_envs.pelican import pelican_attitude_controller
+
 # ROS packages required
 import rospy
 import rospkg
@@ -38,22 +38,21 @@ def clear_monitor_files(training_dir):
         os.unlink(file)
 
 if __name__ == '__main__':
-    rospy.init_node('pelican_ppo_controller_training', anonymous=True, log_level=rospy.WARN)
-    env = gym.make('PelicanNavWillowgarageEnv-v0')
+    rospy.init_node('pelican_ddpg_attitude_controller_training', anonymous=True, log_level=rospy.WARN)
+    env = gym.make('PelicanAttControllerEnv-v0')
     rospy.loginfo("Gym environment done")
     outdir = '/tmp/openai_ros_experiments/'
 
     continue_execution = False
     #fill this if continue_execution=True
-    weights_path = '/tmp/pelican_willowgarage_ppo_ep200.h5'
-    monitor_path = '/tmp/pelican_willowgarag_ppo_ep200'
-    params_json  = '/tmp/pelican_willowgarag_ppo_ep200.json'
+    weights_path = '/tmp/pelican_AttController_ddpg_ep200.h5'
+    monitor_path = '/tmp/pelican_AttController_ddpg_ep200'
+    params_json  = '/tmp/pelican_AttController_ddpg_ep200.json'
 
     A_DIM = env.unwrapped.a_dim
     S_DIM = env.unwrapped.s_dim
     epochs = 100000
     episode_steps = 500
-    propeller_hovering_speed = rospy.get_param("/pelican/propeller_hovering_speed")
 
     if not continue_execution:
         minibatch_size = 32
@@ -87,7 +86,7 @@ if __name__ == '__main__':
         clear_monitor_files(outdir)
         copy_tree(monitor_path, outdir)
         env = gym.wrappers.Monitor(env, outdir, resume=True)
-    ppo = single_thread_ppo.PPO(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, A_LR=A_learningRate, C_LR=C_learningRate,BATCH=minibatch_size, propeller_hovering_speed=propeller_hovering_speed)
+    ddpg = ddpg.ddpg(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, A_LR=A_learningRate, C_LR=C_learningRate,BATCH=minibatch_size, propeller_hovering_speed=0.0)
     last100Rewards = [0] * 100
     last100RewardsIndex = 0
     last100Filled = False
@@ -104,7 +103,7 @@ if __name__ == '__main__':
         for t in range(episode_steps):
 
             #action = env.action_space.sample()
-            action = ppo.choose_action(np.array(observation))
+            action = ddpg.choose_action(np.array(observation))
             #print("action: ", action)
             newObservation, reward, done, info = env.step(action)
             buffer_s.append(observation)
@@ -119,9 +118,9 @@ if __name__ == '__main__':
             env._flush(force=True)
             cumulated_reward += reward
 
-            # update ppo
+            # update ddpg
             if t % minibatch_size == 0 or t == episode_steps or done:
-                v_s_ = ppo.get_v(np.array(observation))
+                v_s_ = ddpg.get_v(np.array(observation))
                 discounted_r = []
                 for r in buffer_r[::-1]:
                     v_s_ = r + discountFactor * v_s_
@@ -129,7 +128,7 @@ if __name__ == '__main__':
                 discounted_r.reverse()
                 bs, ba, br = np.vstack(buffer_s), np.vstack(buffer_a), np.array(discounted_r)[:, np.newaxis]
                 buffer_s, buffer_a, buffer_r = [], [], []
-                ppo.update(bs, ba, br)
+                ddpg.update(bs, ba, br)
 
             if done:
                 last100Rewards[last100RewardsIndex] = cumulated_reward
