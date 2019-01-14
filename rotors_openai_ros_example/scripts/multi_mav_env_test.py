@@ -21,7 +21,7 @@ from keras.layers.pooling import MaxPooling2D
 from keras.regularizers import l2
 from keras.optimizers import SGD , Adam
 import memory
-from openai_ros.task_envs.pelican import pelican_attitude_controller
+from openai_ros.task_envs.pelican import multi_mav_collision_avoidance
 
 # ROS packages required
 import rospy
@@ -52,17 +52,17 @@ def clear_monitor_files(training_dir):
         os.unlink(file)
 
 if __name__ == '__main__':
-    rospy.init_node('pelican_ppo_attitude_controller_imitation_learning_training', anonymous=True, log_level=rospy.WARN)
-    env = gym.make('PelicanAttControllerEnv-v0')
+    rospy.init_node('MultiMavCollisionAvoidanceEnv_imitation_learning_training', anonymous=True, log_level=rospy.WARN)
+    env = gym.make('MultiMavCollisionAvoidanceEnv-v0')
     rospy.loginfo("Gym environment done")
     outdir = '/tmp/openai_ros_experiments/'
     call_nlmpc = rospy.ServiceProxy('/pelican/call_nlmpc_controller', AttitudeControllerService)
 
     continue_execution = False
     # fill this if continue_execution=True
-    weights_path = '/tmp/pelican_AttController_il_ep200.h5'
-    monitor_path = '/tmp/pelican_AttController_il_ep200'
-    params_json  = '/tmp/pelican_AttController_il_ep200.json'
+    weights_path = '/tmp/MultiMavCollisionAvoidanceEnv_il_ep200.h5'
+    monitor_path = '/tmp/MultiMavCollisionAvoidanceEnv_il_ep200'
+    params_json  = '/tmp/MultiMavCollisionAvoidanceEnv_il_ep200.json'
 
     A_DIM = env.unwrapped.a_dim
     S_DIM = env.unwrapped.s_dim
@@ -148,25 +148,6 @@ if __name__ == '__main__':
                 # print(t)
                 break
 
-            # if done:
-            #     last100Rewards[last100RewardsIndex] = cumulated_reward
-            #     last100RewardsIndex += 1
-            #     if last100RewardsIndex >= 100:
-            #         last100Filled = True
-            #         last100RewardsIndex = 0
-            #     m, s = divmod(int(time.time() - start_time + loadsim_seconds), 60)
-            #     h, m = divmod(m, 60)
-            #     if not last100Filled:
-            #         print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - CReward: " + str(round(cumulated_reward, 4)) + "  Time: %d:%02d:%02d" % (h, m, s))
-            #     else:
-            #         print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - last100 C_Rewards : " + str(int((sum(last100Rewards) / len(last100Rewards)))) + " - CReward: " + str(round(cumulated_reward, 4)) + "  Eps=" + str(round(explorationRate, 2)) + "  Time: %d:%02d:%02d" % (h, m, s))
-            #         # SAVE SIMULATION DATA
-            #         if (epoch)%100==0:
-            #             #save model weights and monitoring data every 100 epochs.
-            #             env._flush()
-            #     break
-            #     stepCounter += 1
-
         if epoch % trainning_policy_epochs == 0 and epoch > 0 :
             for i in range(test_policy_epochs):
                 observation = env.reset()
@@ -188,7 +169,7 @@ if __name__ == '__main__':
                     if done:
                         m, s = divmod(int(time.time() - start_time + loadsim_seconds), 60)
                         h, m = divmod(m, 60)
-                        print("EP " + str(i) + " - {} test number".format(epoch // trainning_policy_epochs) + " - CReward: " + str(round(policy_cumulated_reward, 4)) + "  Time: %d:%02d:%02d" % (h, m, s))
+                        print("EP " + str(i) + " - {} test number".format(epoch // trainning_policy_epochs + 1) + " - CReward: " + str(round(policy_cumulated_reward, 4)) + "  Time: %d:%02d:%02d" % (h, m, s))
                         policy_net.logger.store(policy_reward=policy_cumulated_reward)
                         break
             policy_net.logger.log_tabular('policy_reward', average_only=True)

@@ -13,9 +13,9 @@
         "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/data/PelicanAttControllerEnv"
     },
     "self":	{
-        "<policy_core.Policy_Net object at 0x7f9d6515a828>":	{
+        "<policy_core.Policy_Net object at 0x7fdfc46d4c18>":	{
             "logger":	{
-                "<utils.logx.EpochLogger object at 0x7f9d6515ac88>":	{
+                "<utils.logx.EpochLogger object at 0x7fdfc46d49b0>":	{
                     "epoch_dict":	{},
                     "exp_name":	"PelicanAttControllerEnv",
                     "first_row":	true,
