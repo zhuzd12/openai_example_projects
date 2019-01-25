@@ -15,11 +15,20 @@
       <arg name="log_file" value="$(arg log_file)" />
     </include>
 
+    <node name="mav_nonlinear_mpc_service" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_service_node" ns="$(arg mav_name)" respawn="true" clear_params="true">
+      <remap from="odometry" to="ground_truth/odometry" />
+      <rosparam file="$(find mav_nonlinear_mpc)/resources/nonlinear_mpc_$(arg mav_name).yaml" />
+      <rosparam file="$(find mav_disturbance_observer)/resources/disturbance_observer_$(arg mav_name).yaml"/>
+      <param name="use_rc_teleop" value="false"/>
+      <param name="verbose" value="true" />
+      <param name="reference_frame" value="world"/>
+    </node>
+    
     <node name="roll_pitch_yawrate_thrust_controller_node" pkg="rotors_control" type="roll_pitch_yawrate_thrust_controller_node" ns="$(arg mav_name)" output="screen">
       <rosparam command="load" file="$(find rotors_gazebo)/resource/roll_pitch_yawrate_thrust_controller_$(arg mav_name).yaml" />
       <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
       <remap from="odometry" to="odometry_sensor1/odometry" />
     </node>
     <!-- launch training script -->
-    <node pkg="rotors_openai_ros_example" name="pelican_ppo_attitude_controller_training" type="pelican_ppo_attitude_controller_training.py" output="screen"/>
+    <!-- <node pkg="rotors_openai_ros_example" name="pelican_ppo_attitude_controller_training" type="pelican_ppo_attitude_controller_training.py" output="screen"/> -->
 </launch>

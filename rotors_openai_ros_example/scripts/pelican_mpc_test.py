@@ -114,9 +114,11 @@ if __name__ == '__main__':
         # number of timesteps
         for t in range(episode_steps):
 
-            # action = env.action_space.sample()
+            if epoch % 2 == 0:
+                action = env.action_space.sample()
+            else:
             # action = ppo.choose_action(np.array(observation))
-            action = call_mpc(env, call_nlmpc)
+                action = call_mpc(env, call_nlmpc)
             # print("action: ", action)
             newObservation, reward, done, info = env.step(action)
             buffer_s.append(observation)
