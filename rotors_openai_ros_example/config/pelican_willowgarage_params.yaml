@@ -12,8 +12,8 @@ pelican: #namespace
     
     propeller_high_speed: 1500 # High Propeller Speed             
     propeller_low_speed: 0.0 # Low Propeller Speed
-    max_angular_speed: 1.0 # Maximum Base pitch and roll Angular speed
     max_yaw_angular_speed: 1.0 # Maximum Base Turn Angular speed
+    max_roll_pitch_angular_speed: 5.0 # Maximum Base roll/pitch Angular speed
    
     work_space: # 3D cube in which Drone is allowed to move
       x_max: 6.0

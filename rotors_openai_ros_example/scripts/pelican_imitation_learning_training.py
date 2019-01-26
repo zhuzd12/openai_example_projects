@@ -9,17 +9,6 @@ import policy_core
 
 import random
 import numpy as np
-from keras.models import Sequential, load_model
-from keras.initializers import normal
-from keras import optimizers
-from keras.optimizers import RMSprop
-from keras.layers import Convolution2D, Flatten, ZeroPadding2D
-from keras.layers.core import Dense, Dropout, Activation
-from keras.layers.normalization import BatchNormalization
-from keras.layers.advanced_activations import LeakyReLU
-from keras.layers.pooling import MaxPooling2D
-from keras.regularizers import l2
-from keras.optimizers import SGD , Adam
 import memory
 from openai_ros.task_envs.pelican import pelican_attitude_controller
 
@@ -104,8 +93,8 @@ if __name__ == '__main__':
         clear_monitor_files(outdir)
         copy_tree(monitor_path, outdir)
         env = gym.wrappers.Monitor(env, outdir, resume=True)
-    logger_kwargs = setup_logger_kwargs('PelicanAttControllerEnv', None)
-    policy_net = policy_core.Policy_Net(S_DIM=S_DIM, A_DIM=A_DIM, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, LR=I_learningRate, BATCH=minibatch_size, logger_kwargs=logger_kwargs)
+    logger_kwargs = setup_logger_kwargs('PelicanAttControllerEnv2', None)
+    policy_net = policy_core.Policy_Net(env, EP_MAX=epochs, EP_LEN=episode_steps, GAMMA=discountFactor, LR=I_learningRate, BATCH=minibatch_size, logger_kwargs=logger_kwargs)
     last100Rewards = [0] * 100
     last100RewardsIndex = 0
     last100Filled = False
@@ -123,7 +112,6 @@ if __name__ == '__main__':
             # action = env.action_space.sample()
             # action = ppo.choose_action(np.array(observation))
             action = call_mpc(env, call_nlmpc)
-            # print("action: ", action)
             newObservation, reward, done, info = env.step(action)
             buffer_s.append(observation)
             buffer_a.append(action)
@@ -147,25 +135,6 @@ if __name__ == '__main__':
             if done:
                 # print(t)
                 break
-
-            # if done:
-            #     last100Rewards[last100RewardsIndex] = cumulated_reward
-            #     last100RewardsIndex += 1
-            #     if last100RewardsIndex >= 100:
-            #         last100Filled = True
-            #         last100RewardsIndex = 0
-            #     m, s = divmod(int(time.time() - start_time + loadsim_seconds), 60)
-            #     h, m = divmod(m, 60)
-            #     if not last100Filled:
-            #         print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - CReward: " + str(round(cumulated_reward, 4)) + "  Time: %d:%02d:%02d" % (h, m, s))
-            #     else:
-            #         print("EP " + str(epoch) + " - {} steps".format(t + 1) + " - last100 C_Rewards : " + str(int((sum(last100Rewards) / len(last100Rewards)))) + " - CReward: " + str(round(cumulated_reward, 4)) + "  Eps=" + str(round(explorationRate, 2)) + "  Time: %d:%02d:%02d" % (h, m, s))
-            #         # SAVE SIMULATION DATA
-            #         if (epoch)%100==0:
-            #             #save model weights and monitoring data every 100 epochs.
-            #             env._flush()
-            #     break
-            #     stepCounter += 1
 
         if epoch % trainning_policy_epochs == 0 and epoch > 0 :
             for i in range(test_policy_epochs):
