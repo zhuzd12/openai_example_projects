@@ -23,6 +23,7 @@ def load_policy(fpath, itr='last', deterministic=False):
         itr = '%d'%max(saves) if len(saves) > 0 else ''
     else:
         itr = '%d'%itr
+    print("itr: ", itr)
 
     # load the things!
     sess = tf.Session()
@@ -75,7 +76,7 @@ def run_policy(env, get_action, max_ep_len=None, num_episodes=100, logger_kwargs
 if __name__ == '__main__':
     rospy.init_node('pelican_attitude_controller_policy_test', anonymous=True, log_level=rospy.WARN)
     parser = argparse.ArgumentParser()
-    default_fpath = osp.join(osp.abspath(osp.dirname(__file__)),'data/PelicanAttControllerEnv')
+    default_fpath = osp.join(osp.abspath(osp.dirname(__file__)),'data/Pelican_position_controller_dagger_for_ppo/Pelican_position_controller_dagger_for_ppo_s3')
     parser.add_argument('--exp', type=str, default="PelicanAttControllerEnv-v0")
     parser.add_argument('--fpath', type=str, default=default_fpath)
     parser.add_argument('--len', '-l', type=int, default=500)

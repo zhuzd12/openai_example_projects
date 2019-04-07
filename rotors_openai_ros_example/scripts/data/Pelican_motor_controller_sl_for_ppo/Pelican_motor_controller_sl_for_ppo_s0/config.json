@@ -1,0 +1,863 @@
+{
+    "AR":	0.0001,
+    "BATCH":	64,
+    "CR":	0.0001,
+    "EP_LEN":	500,
+    "EP_MAX":	5000,
+    "GAMMA":	0.99,
+    "UPDATE_STEP":	10,
+    "act_noise_amount":	0.01,
+    "activation":	"tanh",
+    "env":	{
+        "<Monitor<TimeLimit<PelicanNavControllerEnv<PelicanNavControllerEnv-v0>>>>":	{
+            "_monitor_id":	0,
+            "action_space":	{
+                "Box(4,)":	{
+                    "dtype":	"float32",
+                    "high":	"[1500. 1500. 1500. 1500.]",
+                    "low":	"[0. 0. 0. 0.]",
+                    "shape":	[
+                        4
+                    ]
+                }
+            },
+            "directory":	"/tmp/openai_ros_experiments",
+            "enabled":	true,
+            "env":	{
+                "<TimeLimit<PelicanNavControllerEnv<PelicanNavControllerEnv-v0>>>":	{
+                    "_elapsed_steps":	0,
+                    "_episode_started_at":	null,
+                    "_max_episode_seconds":	null,
+                    "_max_episode_steps":	300,
+                    "action_space":	{
+                        "Box(4,)":	{
+                            "dtype":	"float32",
+                            "high":	"[1500. 1500. 1500. 1500.]",
+                            "low":	"[0. 0. 0. 0.]",
+                            "shape":	[
+                                4
+                            ]
+                        }
+                    },
+                    "env":	{
+                        "<PelicanNavControllerEnv<PelicanNavControllerEnv-v0>>":	{
+                            "_cmd_drive_pub":	{
+                                "<rospy.topics.Publisher object at 0x7f19b63c16a0>":	{
+                                    "data_class":	"Actuators",
+                                    "impl":	{
+                                        "<rospy.topics._PublisherImpl object at 0x7f19b63c1ef0>":	{
+                                            "buff":	"<_io.BytesIO object at 0x7f19b6332678>",
+                                            "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f19b631e450>",
+                                            "closed":	false,
+                                            "connection_poll":	{
+                                                "<rospy.topics.Poller object at 0x7f19b63e4b38>":	{
+                                                    "add_fd":	"add_epoll",
+                                                    "error_iter":	"error_epoll_iter",
+                                                    "poller":	"<select.epoll object at 0x7f19b641aed0>",
+                                                    "remove_fd":	"remove_epoll"
+                                                }
+                                            },
+                                            "connections":	[
+                                                {
+                                                    "<rospy.impl.tcpros_pubsub.QueuedConnection object at 0x7f19b633ac18>":	{
+                                                        "_cond_data_available":	{
+                                                            "<Condition(<unlocked _thread.lock object at 0x7f19b634f0f8>, 1)>":	{
+                                                                "_lock":	"<unlocked _thread.lock object at 0x7f19b634f0f8>",
+                                                                "_waiters":	"deque([<locked _thread.lock object at 0x7f19b634f148>])",
+                                                                "acquire":	"acquire",
+                                                                "release":	"release"
+                                                            }
+                                                        },
+                                                        "_connection":	{
+                                                            "<rospy.impl.tcpros_base.TCPROSTransport object at 0x7f19b633ac50>":	{
+                                                                "_fileno":	25,
+                                                                "callerid_pub":	"unknown",
+                                                                "cleanup_cb":	"cleanup_cb_wrapper",
+                                                                "dest_address":	null,
+                                                                "direction":	"o",
+                                                                "done":	false,
+                                                                "endpoint_id":	"/gazebo",
+                                                                "header":	null,
+                                                                "id":	7,
+                                                                "is_latched":	false,
+                                                                "latch":	null,
+                                                                "local_endpoint":	[
+                                                                    "127.0.1.1",
+                                                                    41713
+                                                                ],
+                                                                "md5sum":	null,
+                                                                "name":	"/pelican/command/motor_speed",
+                                                                "protocol":	{
+                                                                    "<rospy.impl.tcpros_pubsub.TCPROSPub object at 0x7f19b633abe0>":	{
+                                                                        "buff_size":	128,
+                                                                        "direction":	"o",
+                                                                        "headers":	{},
+                                                                        "is_latch":	false,
+                                                                        "pub_data_class":	"Actuators",
+                                                                        "queue_size":	null,
+                                                                        "recv_data_class":	null,
+                                                                        "resolved_name":	"/pelican/command/motor_speed"
+                                                                    }
+                                                                },
+                                                                "read_buff":	"<_io.BytesIO object at 0x7f19b6332780>",
+                                                                "remote_endpoint":	[
+                                                                    "127.0.0.1",
+                                                                    59036
+                                                                ],
+                                                                "socket":	"<socket.socket fd=25, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.1.1', 41713), raddr=('127.0.0.1', 59036)>",
+                                                                "stat_bytes":	1464,
+                                                                "stat_num_msg":	0,
+                                                                "type":	null,
+                                                                "write_buff":	"<_io.BytesIO object at 0x7f19b6332d58>"
+                                                            }
+                                                        },
+                                                        "_error":	null,
+                                                        "_lock":	"<unlocked _thread.lock object at 0x7f19b634f0f8>",
+                                                        "_queue":	[],
+                                                        "_queue_size":	1,
+                                                        "_thread":	{
+                                                            "<Thread(Thread-10, started daemon 139750519580416)>":	{
+                                                                "_args":	[],
+                                                                "_daemonic":	true,
+                                                                "_ident":	139750519580416,
+                                                                "_initialized":	true,
+                                                                "_is_stopped":	false,
+                                                                "_kwargs":	{},
+                                                                "_name":	"Thread-10",
+                                                                "_started":	{
+                                                                    "<threading.Event object at 0x7f19b633acf8>":	{
+                                                                        "_cond":	{
+                                                                            "<Condition(<unlocked _thread.lock object at 0x7f19b634f0d0>, 0)>":	{
+                                                                                "_lock":	"<unlocked _thread.lock object at 0x7f19b634f0d0>",
+                                                                                "_waiters":	"deque([])",
+                                                                                "acquire":	"acquire",
+                                                                                "release":	"release"
+                                                                            }
+                                                                        },
+                                                                        "_flag":	true
+                                                                    }
+                                                                },
+                                                                "_stderr":	{
+                                                                    "<_io.TextIOWrapper name='<stderr>' mode='w' encoding='UTF-8'>":	{
+                                                                        "mode":	"w"
+                                                                    }
+                                                                },
+                                                                "_target":	"_run",
+                                                                "_tstate_lock":	"<locked _thread.lock object at 0x7f19b634f120>"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "data_class":	"Actuators",
+                                            "handler":	null,
+                                            "headers":	{},
+                                            "is_latch":	false,
+                                            "latch":	null,
+                                            "message_data_sent":	0,
+                                            "name":	"/pelican/command/motor_speed",
+                                            "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f19b631e810>",
+                                            "queue_size":	1,
+                                            "ref_count":	1,
+                                            "resolved_name":	"/pelican/command/motor_speed",
+                                            "seq":	0,
+                                            "subscriber_listeners":	[],
+                                            "type":	"mav_msgs/Actuators"
+                                        }
+                                    },
+                                    "md5sum":	"25741daf38ed25442e3a66a855ee8d9c",
+                                    "name":	"/pelican/command/motor_speed",
+                                    "reg_type":	"pub",
+                                    "resolved_name":	"/pelican/command/motor_speed",
+                                    "type":	"mav_msgs/Actuators"
+                                }
+                            },
+                            "a_dim":	4,
+                            "acc_cost_weight":	0.0002,
+                            "action_space":	{
+                                "Box(4,)":	{
+                                    "dtype":	"float32",
+                                    "high":	"[1500. 1500. 1500. 1500.]",
+                                    "low":	"[0. 0. 0. 0.]",
+                                    "shape":	[
+                                        4
+                                    ]
+                                }
+                            },
+                            "angular_velocity_cost_weight":	0.0003,
+                            "attitude_cost_weight":	0.0002,
+                            "closer_to_point_reward":	1.0,
+                            "controllers_list":	[],
+                            "controllers_object":	{
+                                "<openai_ros.controllers_connection.ControllersConnection object at 0x7f19b63e4b00>":	{
+                                    "controllers_list":	[],
+                                    "switch_service":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63e4dd8>":	{
+                                            "buff_size":	65536,
+                                            "persistent":	false,
+                                            "protocol":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63c1550>":	{
+                                                    "buff_size":	65536,
+                                                    "direction":	"b",
+                                                    "headers":	{},
+                                                    "queue_size":	null,
+                                                    "recv_data_class":	"SwitchControllerResponse",
+                                                    "resolved_name":	"/controller_manager/switch_controller",
+                                                    "service_class":	"SwitchController"
+                                                }
+                                            },
+                                            "request_class":	"SwitchControllerRequest",
+                                            "resolved_name":	"/controller_manager/switch_controller",
+                                            "response_class":	"SwitchControllerResponse",
+                                            "seq":	0,
+                                            "service_class":	"SwitchController",
+                                            "transport":	null,
+                                            "uri":	null
+                                        }
+                                    },
+                                    "switch_service_name":	"//controller_manager/switch_controller"
+                                }
+                            },
+                            "cumulated_episode_reward":	0,
+                            "cumulated_steps":	0.0,
+                            "current_euler":	[
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "current_reset_pos":	"x: 0.0\ny: 0.0\nz: 0.0",
+                            "dec_obs":	5,
+                            "desired_point":	"x: 0.0\ny: 0.0\nz: 5.0",
+                            "desired_point_epsilon":	0.2,
+                            "done_reward":	100.0,
+                            "energy_cost_weight":	1e-05,
+                            "episode_num":	0,
+                            "gazebo":	{
+                                "<openai_ros.gazebo_connection.GazeboConnection object at 0x7f19b63dbef0>":	{
+                                    "pause":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63c1828>":	{
+                                            "buff_size":	65536,
+                                            "persistent":	false,
+                                            "protocol":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63c1278>":	{
+                                                    "buff_size":	65536,
+                                                    "direction":	"b",
+                                                    "headers":	{},
+                                                    "queue_size":	null,
+                                                    "recv_data_class":	"EmptyResponse",
+                                                    "resolved_name":	"/gazebo/pause_physics",
+                                                    "service_class":	"Empty"
+                                                }
+                                            },
+                                            "request_class":	"EmptyRequest",
+                                            "resolved_name":	"/gazebo/pause_physics",
+                                            "response_class":	"EmptyResponse",
+                                            "seq":	2,
+                                            "service_class":	"Empty",
+                                            "transport":	null,
+                                            "uri":	"rosrpc://zhuzd-PC:32907"
+                                        }
+                                    },
+                                    "reset_simulation_proxy":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63c10b8>":	{
+                                            "buff_size":	65536,
+                                            "persistent":	false,
+                                            "protocol":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63c1a90>":	{
+                                                    "buff_size":	65536,
+                                                    "direction":	"b",
+                                                    "headers":	{},
+                                                    "queue_size":	null,
+                                                    "recv_data_class":	"EmptyResponse",
+                                                    "resolved_name":	"/gazebo/reset_simulation",
+                                                    "service_class":	"Empty"
+                                                }
+                                            },
+                                            "request_class":	"EmptyRequest",
+                                            "resolved_name":	"/gazebo/reset_simulation",
+                                            "response_class":	"EmptyResponse",
+                                            "seq":	0,
+                                            "service_class":	"Empty",
+                                            "transport":	null,
+                                            "uri":	null
+                                        }
+                                    },
+                                    "reset_world_or_sim":	"NO_RESET_SIM",
+                                    "reset_world_proxy":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63c18d0>":	{
+                                            "buff_size":	65536,
+                                            "persistent":	false,
+                                            "protocol":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63c1908>":	{
+                                                    "buff_size":	65536,
+                                                    "direction":	"b",
+                                                    "headers":	{},
+                                                    "queue_size":	null,
+                                                    "recv_data_class":	"EmptyResponse",
+                                                    "resolved_name":	"/gazebo/reset_world",
+                                                    "service_class":	"Empty"
+                                                }
+                                            },
+                                            "request_class":	"EmptyRequest",
+                                            "resolved_name":	"/gazebo/reset_world",
+                                            "response_class":	"EmptyResponse",
+                                            "seq":	0,
+                                            "service_class":	"Empty",
+                                            "transport":	null,
+                                            "uri":	null
+                                        }
+                                    },
+                                    "set_physics":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63c1a58>":	{
+                                            "buff_size":	65536,
+                                            "persistent":	false,
+                                            "protocol":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63c1dd8>":	{
+                                                    "buff_size":	65536,
+                                                    "direction":	"b",
+                                                    "headers":	{},
+                                                    "queue_size":	null,
+                                                    "recv_data_class":	"SetPhysicsPropertiesResponse",
+                                                    "resolved_name":	"/gazebo/set_physics_properties",
+                                                    "service_class":	"SetPhysicsProperties"
+                                                }
+                                            },
+                                            "request_class":	"SetPhysicsPropertiesRequest",
+                                            "resolved_name":	"/gazebo/set_physics_properties",
+                                            "response_class":	"SetPhysicsPropertiesResponse",
+                                            "seq":	0,
+                                            "service_class":	"SetPhysicsProperties",
+                                            "transport":	null,
+                                            "uri":	null
+                                        }
+                                    },
+                                    "start_init_physics_parameters":	false,
+                                    "unpause":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63db198>":	{
+                                            "buff_size":	65536,
+                                            "persistent":	false,
+                                            "protocol":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63c1240>":	{
+                                                    "buff_size":	65536,
+                                                    "direction":	"b",
+                                                    "headers":	{},
+                                                    "queue_size":	null,
+                                                    "recv_data_class":	"EmptyResponse",
+                                                    "resolved_name":	"/gazebo/unpause_physics",
+                                                    "service_class":	"Empty"
+                                                }
+                                            },
+                                            "request_class":	"EmptyRequest",
+                                            "resolved_name":	"/gazebo/unpause_physics",
+                                            "response_class":	"EmptyResponse",
+                                            "seq":	1,
+                                            "service_class":	"Empty",
+                                            "transport":	null,
+                                            "uri":	"rosrpc://zhuzd-PC:32907"
+                                        }
+                                    }
+                                }
+                            },
+                            "max_distance_from_des_point":	20.0,
+                            "max_roll_pitch_angular_speed":	5.0,
+                            "max_yaw_angular_speed":	1.0,
+                            "np_random":	"<mtrand.RandomState object at 0x7f19b63be9d8>",
+                            "observation_space":	{
+                                "Box(18,)":	{
+                                    "dtype":	"float32",
+                                    "high":	"[inf inf inf inf inf inf inf inf inf  5.  5. 10. inf inf inf  5.  5.  1.]",
+                                    "low":	"[-inf -inf -inf -inf -inf -inf -inf -inf -inf  -5.  -5.  10. -inf -inf\n -inf  -5.  -5.  -1.]",
+                                    "shape":	[
+                                        18
+                                    ]
+                                }
+                            },
+                            "odom":	"header: \n  seq: 1643558\n  stamp: \n    secs: 16435\n    nsecs: 590000000\n  frame_id: \"world\"\nchild_frame_id: \"pelican/base_link\"\npose: \n  pose: \n    position: \n      x: 3.520170042859995\n      y: -7.910183493304463\n      z: 0.10000135500121304\n    orientation: \n      x: 0.12361930797731292\n      y: -0.9923297167248427\n      z: -5.6810165563416346e-08\n      w: -1.7621863068178254e-08\n  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\ntwist: \n  twist: \n    linear: \n      x: -2.1312225029029185e-07\n      y: 4.447826871777355e-07\n      z: -0.009999998804674507\n    angular: \n      x: 3.5576769960855586e-06\n      y: 1.673397306134336e-06\n      z: -1.5209987474389553e-06\n  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",
+                            "position_cost_weight":	0.004,
+                            "predefined_quat":	[
+                                {
+                                    "1.000 +0.000i +0.000j +0.000k":	{
+                                        "q":	"[1. 0. 0. 0.]"
+                                    }
+                                },
+                                {
+                                    "0.966 +0.149i +0.149j +0.149k":	{
+                                        "q":	"[0.96592583 0.14942925 0.14942925 0.14942925]"
+                                    }
+                                },
+                                {
+                                    "0.866 +0.289i +0.289j +0.289k":	{
+                                        "q":	"[0.8660254  0.28867513 0.28867513 0.28867513]"
+                                    }
+                                }
+                            ],
+                            "predefined_waypoints":	[
+                                [
+                                    -4.0,
+                                    -4.0,
+                                    1.3
+                                ],
+                                [
+                                    -4.0,
+                                    -4.0,
+                                    4.15
+                                ],
+                                [
+                                    -4.0,
+                                    -4.0,
+                                    9.0
+                                ],
+                                [
+                                    -4.0,
+                                    1.0,
+                                    1.3
+                                ],
+                                [
+                                    -4.0,
+                                    1.0,
+                                    4.15
+                                ],
+                                [
+                                    -4.0,
+                                    1.0,
+                                    9.0
+                                ],
+                                [
+                                    -4.0,
+                                    4.0,
+                                    1.3
+                                ],
+                                [
+                                    -4.0,
+                                    4.0,
+                                    4.15
+                                ],
+                                [
+                                    -4.0,
+                                    4.0,
+                                    9.0
+                                ],
+                                [
+                                    1.0,
+                                    -4.0,
+                                    1.3
+                                ],
+                                [
+                                    1.0,
+                                    -4.0,
+                                    4.15
+                                ],
+                                [
+                                    1.0,
+                                    -4.0,
+                                    9.0
+                                ],
+                                [
+                                    1.0,
+                                    1.0,
+                                    1.3
+                                ],
+                                [
+                                    1.0,
+                                    1.0,
+                                    4.15
+                                ],
+                                [
+                                    1.0,
+                                    1.0,
+                                    9.0
+                                ],
+                                [
+                                    1.0,
+                                    4.0,
+                                    1.3
+                                ],
+                                [
+                                    1.0,
+                                    4.0,
+                                    4.15
+                                ],
+                                [
+                                    1.0,
+                                    4.0,
+                                    9.0
+                                ],
+                                [
+                                    4.0,
+                                    -4.0,
+                                    1.3
+                                ],
+                                [
+                                    4.0,
+                                    -4.0,
+                                    4.15
+                                ],
+                                [
+                                    4.0,
+                                    -4.0,
+                                    9.0
+                                ],
+                                [
+                                    4.0,
+                                    1.0,
+                                    1.3
+                                ],
+                                [
+                                    4.0,
+                                    1.0,
+                                    4.15
+                                ],
+                                [
+                                    4.0,
+                                    1.0,
+                                    9.0
+                                ],
+                                [
+                                    4.0,
+                                    4.0,
+                                    1.3
+                                ],
+                                [
+                                    4.0,
+                                    4.0,
+                                    4.15
+                                ],
+                                [
+                                    4.0,
+                                    4.0,
+                                    9.0
+                                ]
+                            ],
+                            "propeller_high_speed":	1500,
+                            "propeller_hovering_speed":	508.76,
+                            "propeller_low_speed":	0.0,
+                            "propeller_normalize_constant":	1000,
+                            "publishers_array":	[
+                                {
+                                    "<rospy.topics.Publisher object at 0x7f19b63c16a0>":	{
+                                        "data_class":	"Actuators",
+                                        "impl":	{
+                                            "<rospy.topics._PublisherImpl object at 0x7f19b63c1ef0>":	{
+                                                "buff":	"<_io.BytesIO object at 0x7f19b6332678>",
+                                                "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f19b631e450>",
+                                                "closed":	false,
+                                                "connection_poll":	{
+                                                    "<rospy.topics.Poller object at 0x7f19b63e4b38>":	{
+                                                        "add_fd":	"add_epoll",
+                                                        "error_iter":	"error_epoll_iter",
+                                                        "poller":	"<select.epoll object at 0x7f19b641aed0>",
+                                                        "remove_fd":	"remove_epoll"
+                                                    }
+                                                },
+                                                "connections":	[
+                                                    {
+                                                        "<rospy.impl.tcpros_pubsub.QueuedConnection object at 0x7f19b633ac18>":	{
+                                                            "_cond_data_available":	{
+                                                                "<Condition(<unlocked _thread.lock object at 0x7f19b634f0f8>, 1)>":	{
+                                                                    "_lock":	"<unlocked _thread.lock object at 0x7f19b634f0f8>",
+                                                                    "_waiters":	"deque([<locked _thread.lock object at 0x7f19b634f148>])",
+                                                                    "acquire":	"acquire",
+                                                                    "release":	"release"
+                                                                }
+                                                            },
+                                                            "_connection":	{
+                                                                "<rospy.impl.tcpros_base.TCPROSTransport object at 0x7f19b633ac50>":	{
+                                                                    "_fileno":	25,
+                                                                    "callerid_pub":	"unknown",
+                                                                    "cleanup_cb":	"cleanup_cb_wrapper",
+                                                                    "dest_address":	null,
+                                                                    "direction":	"o",
+                                                                    "done":	false,
+                                                                    "endpoint_id":	"/gazebo",
+                                                                    "header":	null,
+                                                                    "id":	7,
+                                                                    "is_latched":	false,
+                                                                    "latch":	null,
+                                                                    "local_endpoint":	[
+                                                                        "127.0.1.1",
+                                                                        41713
+                                                                    ],
+                                                                    "md5sum":	null,
+                                                                    "name":	"/pelican/command/motor_speed",
+                                                                    "protocol":	{
+                                                                        "<rospy.impl.tcpros_pubsub.TCPROSPub object at 0x7f19b633abe0>":	{
+                                                                            "buff_size":	128,
+                                                                            "direction":	"o",
+                                                                            "headers":	{},
+                                                                            "is_latch":	false,
+                                                                            "pub_data_class":	"Actuators",
+                                                                            "queue_size":	null,
+                                                                            "recv_data_class":	null,
+                                                                            "resolved_name":	"/pelican/command/motor_speed"
+                                                                        }
+                                                                    },
+                                                                    "read_buff":	"<_io.BytesIO object at 0x7f19b6332780>",
+                                                                    "remote_endpoint":	[
+                                                                        "127.0.0.1",
+                                                                        59036
+                                                                    ],
+                                                                    "socket":	"<socket.socket fd=25, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.1.1', 41713), raddr=('127.0.0.1', 59036)>",
+                                                                    "stat_bytes":	1464,
+                                                                    "stat_num_msg":	0,
+                                                                    "type":	null,
+                                                                    "write_buff":	"<_io.BytesIO object at 0x7f19b6332d58>"
+                                                                }
+                                                            },
+                                                            "_error":	null,
+                                                            "_lock":	"<unlocked _thread.lock object at 0x7f19b634f0f8>",
+                                                            "_queue":	[],
+                                                            "_queue_size":	1,
+                                                            "_thread":	{
+                                                                "<Thread(Thread-10, started daemon 139750519580416)>":	{
+                                                                    "_args":	[],
+                                                                    "_daemonic":	true,
+                                                                    "_ident":	139750519580416,
+                                                                    "_initialized":	true,
+                                                                    "_is_stopped":	false,
+                                                                    "_kwargs":	{},
+                                                                    "_name":	"Thread-10",
+                                                                    "_started":	{
+                                                                        "<threading.Event object at 0x7f19b633acf8>":	{
+                                                                            "_cond":	{
+                                                                                "<Condition(<unlocked _thread.lock object at 0x7f19b634f0d0>, 0)>":	{
+                                                                                    "_lock":	"<unlocked _thread.lock object at 0x7f19b634f0d0>",
+                                                                                    "_waiters":	"deque([])",
+                                                                                    "acquire":	"acquire",
+                                                                                    "release":	"release"
+                                                                                }
+                                                                            },
+                                                                            "_flag":	true
+                                                                        }
+                                                                    },
+                                                                    "_stderr":	{
+                                                                        "<_io.TextIOWrapper name='<stderr>' mode='w' encoding='UTF-8'>":	{
+                                                                            "mode":	"w"
+                                                                        }
+                                                                    },
+                                                                    "_target":	"_run",
+                                                                    "_tstate_lock":	"<locked _thread.lock object at 0x7f19b634f120>"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "data_class":	"Actuators",
+                                                "handler":	null,
+                                                "headers":	{},
+                                                "is_latch":	false,
+                                                "latch":	null,
+                                                "message_data_sent":	0,
+                                                "name":	"/pelican/command/motor_speed",
+                                                "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f19b631e810>",
+                                                "queue_size":	1,
+                                                "ref_count":	1,
+                                                "resolved_name":	"/pelican/command/motor_speed",
+                                                "seq":	0,
+                                                "subscriber_listeners":	[],
+                                                "type":	"mav_msgs/Actuators"
+                                            }
+                                        },
+                                        "md5sum":	"25741daf38ed25442e3a66a855ee8d9c",
+                                        "name":	"/pelican/command/motor_speed",
+                                        "reg_type":	"pub",
+                                        "resolved_name":	"/pelican/command/motor_speed",
+                                        "type":	"mav_msgs/Actuators"
+                                    }
+                                }
+                            ],
+                            "random_frequency":	1,
+                            "reset_controls":	false,
+                            "reset_pos_steps":	0,
+                            "reward_pub":	{
+                                "<rospy.topics.Publisher object at 0x7f19b63c1748>":	{
+                                    "data_class":	"RLExperimentInfo",
+                                    "impl":	{
+                                        "<rospy.topics._PublisherImpl object at 0x7f19b63c1080>":	{
+                                            "buff":	"<_io.BytesIO object at 0x7f19b6332af0>",
+                                            "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f19b631e780>",
+                                            "closed":	false,
+                                            "connection_poll":	{
+                                                "<rospy.topics.Poller object at 0x7f19b63c1518>":	{
+                                                    "add_fd":	"add_epoll",
+                                                    "error_iter":	"error_epoll_iter",
+                                                    "poller":	"<select.epoll object at 0x7f19b641a6a8>",
+                                                    "remove_fd":	"remove_epoll"
+                                                }
+                                            },
+                                            "connections":	[],
+                                            "data_class":	"RLExperimentInfo",
+                                            "handler":	null,
+                                            "headers":	{},
+                                            "is_latch":	false,
+                                            "latch":	null,
+                                            "message_data_sent":	0,
+                                            "name":	"/openai/reward",
+                                            "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f19b631e570>",
+                                            "queue_size":	1,
+                                            "ref_count":	1,
+                                            "resolved_name":	"/openai/reward",
+                                            "seq":	0,
+                                            "subscriber_listeners":	[],
+                                            "type":	"openai_ros/RLExperimentInfo"
+                                        }
+                                    },
+                                    "md5sum":	"117729220546455cc216a7df0b6e91d0",
+                                    "name":	"/openai/reward",
+                                    "reg_type":	"pub",
+                                    "resolved_name":	"/openai/reward",
+                                    "type":	"openai_ros/RLExperimentInfo"
+                                }
+                            },
+                            "reward_range":	[
+                                -Infinity,
+                                Infinity
+                            ],
+                            "robot_name_space":	"",
+                            "s_dim":	18,
+                            "set_model_state":	{
+                                "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f19b63db048>":	{
+                                    "buff_size":	65536,
+                                    "persistent":	false,
+                                    "protocol":	{
+                                        "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f19b63db080>":	{
+                                            "buff_size":	65536,
+                                            "direction":	"b",
+                                            "headers":	{},
+                                            "queue_size":	null,
+                                            "recv_data_class":	"SetModelStateResponse",
+                                            "resolved_name":	"/gazebo/set_model_state",
+                                            "service_class":	"SetModelState"
+                                        }
+                                    },
+                                    "request_class":	"SetModelStateRequest",
+                                    "resolved_name":	"/gazebo/set_model_state",
+                                    "response_class":	"SetModelStateResponse",
+                                    "seq":	0,
+                                    "service_class":	"SetModelState",
+                                    "transport":	null,
+                                    "uri":	null
+                                }
+                            },
+                            "spec":	{
+                                "EnvSpec(PelicanNavControllerEnv-v0)":	{
+                                    "_entry_point":	"openai_ros:task_envs.pelican.pelican_controller.PelicanNavControllerEnv",
+                                    "_env_name":	"PelicanNavControllerEnv",
+                                    "_kwargs":	{},
+                                    "_local_only":	false,
+                                    "id":	"PelicanNavControllerEnv-v0",
+                                    "max_episode_seconds":	null,
+                                    "max_episode_steps":	300,
+                                    "nondeterministic":	false,
+                                    "reward_threshold":	null,
+                                    "tags":	{
+                                        "wrapper_config.TimeLimit.max_episode_steps":	null
+                                    },
+                                    "trials":	100
+                                }
+                            },
+                            "test_mode":	false,
+                            "velocity_cost_weight":	0.0005,
+                            "work_space_x_max":	5.0,
+                            "work_space_x_min":	-5.0,
+                            "work_space_y_max":	5.0,
+                            "work_space_y_min":	-5.0,
+                            "work_space_z_max":	10.0,
+                            "work_space_z_min":	0.3
+                        }
+                    },
+                    "metadata":	{
+                        "render.modes":	[]
+                    },
+                    "observation_space":	{
+                        "Box(18,)":	{
+                            "dtype":	"float32",
+                            "high":	"[inf inf inf inf inf inf inf inf inf  5.  5. 10. inf inf inf  5.  5.  1.]",
+                            "low":	"[-inf -inf -inf -inf -inf -inf -inf -inf -inf  -5.  -5.  10. -inf -inf\n -inf  -5.  -5.  -1.]",
+                            "shape":	[
+                                18
+                            ]
+                        }
+                    },
+                    "reward_range":	[
+                        -Infinity,
+                        Infinity
+                    ]
+                }
+            },
+            "env_semantics_autoreset":	null,
+            "episode_id":	0,
+            "file_infix":	"0.13696",
+            "file_prefix":	"openaigym",
+            "metadata":	{
+                "render.modes":	[]
+            },
+            "observation_space":	{
+                "Box(18,)":	{
+                    "dtype":	"float32",
+                    "high":	"[inf inf inf inf inf inf inf inf inf  5.  5. 10. inf inf inf  5.  5.  1.]",
+                    "low":	"[-inf -inf -inf -inf -inf -inf -inf -inf -inf  -5.  -5.  10. -inf -inf\n -inf  -5.  -5.  -1.]",
+                    "shape":	[
+                        18
+                    ]
+                }
+            },
+            "reward_range":	[
+                -Infinity,
+                Infinity
+            ],
+            "stats_recorder":	{
+                "<gym.wrappers.monitoring.stats_recorder.StatsRecorder object at 0x7f19b633ac88>":	{
+                    "_type":	"t",
+                    "autoreset":	null,
+                    "closed":	false,
+                    "directory":	"/tmp/openai_ros_experiments/",
+                    "done":	null,
+                    "env_id":	"PelicanNavControllerEnv-v0",
+                    "episode_lengths":	[],
+                    "episode_rewards":	[],
+                    "episode_types":	[],
+                    "file_prefix":	"openaigym.episode_batch.0.13696",
+                    "initial_reset_timestamp":	null,
+                    "path":	"/tmp/openai_ros_experiments/openaigym.episode_batch.0.13696.stats.json",
+                    "rewards":	null,
+                    "steps":	null,
+                    "timestamps":	[],
+                    "total_steps":	0
+                }
+            },
+            "video_callable":	"capped_cubic_video_schedule",
+            "video_recorder":	null,
+            "videos":	[],
+            "write_upon_reset":	false
+        }
+    },
+    "exp_name":	"Pelican_motor_controller_sl_for_ppo",
+    "hidden_sizes":	[
+        64,
+        64
+    ],
+    "logger_kwargs":	{
+        "exp_name":	"Pelican_motor_controller_sl_for_ppo",
+        "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/data/Pelican_motor_controller_sl_for_ppo/Pelican_motor_controller_sl_for_ppo_s0"
+    },
+    "output_activation":	null,
+    "self":	{
+        "<actor_critic_core.AC_Net object at 0x7f19b634e358>":	{
+            "logger":	{
+                "<spinup.utils.logx.EpochLogger object at 0x7f19b634e080>":	{
+                    "epoch_dict":	{},
+                    "exp_name":	"Pelican_motor_controller_sl_for_ppo",
+                    "first_row":	true,
+                    "log_current_row":	{},
+                    "log_headers":	[],
+                    "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/data/Pelican_motor_controller_sl_for_ppo/Pelican_motor_controller_sl_for_ppo_s0",
+                    "output_file":	{
+                        "<_io.TextIOWrapper name='/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/data/Pelican_motor_controller_sl_for_ppo/Pelican_motor_controller_sl_for_ppo_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                            "mode":	"w"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

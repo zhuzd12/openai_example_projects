@@ -10,16 +10,16 @@ pelican: #namespace
 
     n_actions: 4 # Forwards, Backwards, TurnLeft and TurnRight
     
-    propeller_high_speed: 1500 # High Propeller Speed             
+    propeller_high_speed: 3000 # High Propeller Speed             
     propeller_low_speed: 0.0 # Low Propeller Speed
     max_yaw_angular_speed: 1.0 # Maximum Base Turn Angular speed
     max_roll_pitch_angular_speed: 5.0 # Maximum Base roll/pitch Angular speed
    
     work_space: # 3D cube in which Drone is allowed to move
-      x_max: 6.0
-      x_min: -6.0
-      y_max: 6.0
-      y_min: -6.0
+      x_max: 5.0
+      x_min: -5.0
+      y_max: 5.0
+      y_min: -5.0
       z_max: 10.0
       z_min: 0.3
 
@@ -27,19 +27,21 @@ pelican: #namespace
       x: 0.0
       y: 0.0
       z: 5.0
-    desired_point_epsilon: 0.5
-    max_distance_from_des_point: 30.0 # Maximum distance regitered in observations, has to be bigger than the largest distance of the workspace.
+    desired_point_epsilon: 0.001
+    max_distance_from_des_point: 20.0 # Maximum distance regitered in observations, has to be bigger than the largest distance of the workspace.
     
     number_decimals_precision_obs: 5
-    propeller_hovering_speed: 508.76
+    propeller_hovering_speed: 0 # 508.76
     propeller_normalize_constant: 1000
 
-    energy_cost_weight: 1.e-5
-    attitude_cost_weight: 2.e-4
-    position_cost_weight: 4.e-3
-    acc_cost_weight: 2.e-4
-    angular_cost_weight: 3.e-4
-    velocity_cost_weight: 5.e-4
+    energy_cost_weight: 0 #2.e-5
+    attitude_cost_weight: 4.e-3
+    angle_k: 2
+    position_cost_weight: 2.e+0
+    angular_velocity_cost_weight: 0 #4.e-4
+    velocity_cost_weight: 0 #1.e-4
+    acc_cost_weight: 0 #2.e-4
 
-    done_reward: 1000.0 # reward
+    done_reward: 50.0 # reward
+    failed_reward: -0.0
     closer_to_point_reward: 1.0 # reward

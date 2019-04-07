@@ -114,7 +114,7 @@ def train(env,
          render=False,
          learning_rate=1e-3,
          onpol_iters=10,
-         dynamics_iters=400,
+         dynamics_iters=20,
          batch_size=64,
          num_paths_random=10,
          num_paths_onpol=10,
@@ -191,6 +191,7 @@ def train(env,
     # from the dynamics network.
     #
     normalization = compute_normalization(paths)
+    print(normalization)
 
     #========================================================
     #

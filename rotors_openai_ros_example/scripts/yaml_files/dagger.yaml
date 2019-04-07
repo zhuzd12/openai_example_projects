@@ -15,11 +15,14 @@ dyn_model:
     fraction_use_new: 0.9
 
 learning_rate: 0.0001
+actor_learning_rate: 0.0001
+critic_learning_rate: 0.0001
+
 batch_size: 64
 discount_factor: 0.99
 exploration_rate: 1
-memory_size: 100000
-training_steps: 10
+memory_size: 50000
+training_steps: 50
 action_noise: 0.01
 
 hidden_sizes:

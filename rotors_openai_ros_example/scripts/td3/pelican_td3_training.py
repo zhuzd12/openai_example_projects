@@ -8,6 +8,9 @@ from spinup.algos.td3 import core
 from spinup.algos.td3.core import get_vars
 from spinup.utils.logx import EpochLogger
 from openai_ros.task_envs.pelican import pelican_attitude_controller
+from openai_ros.task_envs.pelican import pelican_controller
+from spinup.utils.run_utils import setup_logger_kwargs
+from planning_msgs.srv import MotorControllerService
 import rospy
 import rospkg
 import os.path as osp
@@ -325,13 +328,13 @@ if __name__ == '__main__':
     rospy.init_node('pelican_attitude_controller_td3_training', anonymous=True, log_level=rospy.WARN)
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='PelicanAttControllerEnv-v0')
-    parser.add_argument('--hid', type=int, default=72)
-    parser.add_argument('--l', type=int, default=3)
+    parser.add_argument('--env', type=str, default='PelicanNavControllerEnv-v0')
+    parser.add_argument('--hid', type=int, default=64)
+    parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--seed', '-s', type=int, default=0)
-    parser.add_argument('--epochs', type=int, default=10000)
-    parser.add_argument('--exp_name', type=str, default='td3')
+    parser.add_argument('--epochs', type=int, default=100000)
+    parser.add_argument('--exp_name', type=str, default='pelican_td3')
     args = parser.parse_args()
 
     from spinup.utils.run_utils import setup_logger_kwargs

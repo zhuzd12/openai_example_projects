@@ -1,7 +1,7 @@
 {
     "BATCH":	64,
     "EP_LEN":	500,
-    "EP_MAX":	10000,
+    "EP_MAX":	3000,
     "GAMMA":	0.99,
     "LR":	0.0001,
     "UPDATE_STEP":	10,
@@ -41,35 +41,35 @@
                     "env":	{
                         "<PelicanAttControllerEnv<PelicanAttControllerEnv-v0>>":	{
                             "_cmd_drive_pub":	{
-                                "<rospy.topics.Publisher object at 0x7fa5014e0a20>":	{
+                                "<rospy.topics.Publisher object at 0x7f62fef96278>":	{
                                     "data_class":	"RollPitchYawrateThrust",
                                     "impl":	{
-                                        "<rospy.topics._PublisherImpl object at 0x7fa5014e0470>":	{
-                                            "buff":	"<_io.BytesIO object at 0x7fa50154e620>",
-                                            "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7fa5015d36c0>",
+                                        "<rospy.topics._PublisherImpl object at 0x7f62fef96f60>":	{
+                                            "buff":	"<_io.BytesIO object at 0x7f62ff000eb8>",
+                                            "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f62ff09db70>",
                                             "closed":	false,
                                             "connection_poll":	{
-                                                "<rospy.topics.Poller object at 0x7fa5014e08d0>":	{
+                                                "<rospy.topics.Poller object at 0x7f62fef9b588>":	{
                                                     "add_fd":	"add_epoll",
                                                     "error_iter":	"error_epoll_iter",
-                                                    "poller":	"<select.epoll object at 0x7fa501538330>",
+                                                    "poller":	"<select.epoll object at 0x7f62feff0348>",
                                                     "remove_fd":	"remove_epoll"
                                                 }
                                             },
                                             "connections":	[
                                                 {
-                                                    "<rospy.impl.tcpros_pubsub.QueuedConnection object at 0x7fa501547e80>":	{
+                                                    "<rospy.impl.tcpros_pubsub.QueuedConnection object at 0x7f62fef96400>":	{
                                                         "_cond_data_available":	{
-                                                            "<Condition(<unlocked _thread.lock object at 0x7fa5015cbfd0>, 1)>":	{
-                                                                "_lock":	"<unlocked _thread.lock object at 0x7fa5015cbfd0>",
-                                                                "_waiters":	"deque([<locked _thread.lock object at 0x7fa501544030>])",
+                                                            "<Condition(<unlocked _thread.lock object at 0x7f62ff072b20>, 1)>":	{
+                                                                "_lock":	"<unlocked _thread.lock object at 0x7f62ff072b20>",
+                                                                "_waiters":	"deque([<locked _thread.lock object at 0x7f62ff00c080>])",
                                                                 "acquire":	"acquire",
                                                                 "release":	"release"
                                                             }
                                                         },
                                                         "_connection":	{
-                                                            "<rospy.impl.tcpros_base.TCPROSTransport object at 0x7fa501547e48>":	{
-                                                                "_fileno":	28,
+                                                            "<rospy.impl.tcpros_base.TCPROSTransport object at 0x7f62fef96860>":	{
+                                                                "_fileno":	29,
                                                                 "callerid_pub":	"unknown",
                                                                 "cleanup_cb":	"cleanup_cb_wrapper",
                                                                 "dest_address":	null,
@@ -82,12 +82,12 @@
                                                                 "latch":	null,
                                                                 "local_endpoint":	[
                                                                     "127.0.1.1",
-                                                                    41005
+                                                                    44899
                                                                 ],
                                                                 "md5sum":	null,
                                                                 "name":	"/pelican/command/roll_pitch_yawrate_thrust",
                                                                 "protocol":	{
-                                                                    "<rospy.impl.tcpros_pubsub.TCPROSPub object at 0x7fa501547e10>":	{
+                                                                    "<rospy.impl.tcpros_pubsub.TCPROSPub object at 0x7f62fef966a0>":	{
                                                                         "buff_size":	128,
                                                                         "direction":	"o",
                                                                         "headers":	{},
@@ -98,36 +98,36 @@
                                                                         "resolved_name":	"/pelican/command/roll_pitch_yawrate_thrust"
                                                                     }
                                                                 },
-                                                                "read_buff":	"<_io.BytesIO object at 0x7fa50154e410>",
+                                                                "read_buff":	"<_io.BytesIO object at 0x7f62fefea468>",
                                                                 "remote_endpoint":	[
                                                                     "127.0.0.1",
-                                                                    43654
+                                                                    58268
                                                                 ],
-                                                                "socket":	"<socket.socket fd=28, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.1.1', 41005), raddr=('127.0.0.1', 43654)>",
+                                                                "socket":	"<socket.socket fd=29, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.1.1', 44899), raddr=('127.0.0.1', 58268)>",
                                                                 "stat_bytes":	2400,
                                                                 "stat_num_msg":	0,
                                                                 "type":	null,
-                                                                "write_buff":	"<_io.BytesIO object at 0x7fa50154e048>"
+                                                                "write_buff":	"<_io.BytesIO object at 0x7f62fefea308>"
                                                             }
                                                         },
                                                         "_error":	null,
-                                                        "_lock":	"<unlocked _thread.lock object at 0x7fa5015cbfd0>",
+                                                        "_lock":	"<unlocked _thread.lock object at 0x7f62ff072b20>",
                                                         "_queue":	[],
                                                         "_queue_size":	1,
                                                         "_thread":	{
-                                                            "<Thread(Thread-10, started daemon 140346310784768)>":	{
+                                                            "<Thread(Thread-10, started daemon 140065272854272)>":	{
                                                                 "_args":	[],
                                                                 "_daemonic":	true,
-                                                                "_ident":	140346310784768,
+                                                                "_ident":	140065272854272,
                                                                 "_initialized":	true,
                                                                 "_is_stopped":	false,
                                                                 "_kwargs":	{},
                                                                 "_name":	"Thread-10",
                                                                 "_started":	{
-                                                                    "<threading.Event object at 0x7fa501547f28>":	{
+                                                                    "<threading.Event object at 0x7f62fef96978>":	{
                                                                         "_cond":	{
-                                                                            "<Condition(<unlocked _thread.lock object at 0x7fa5015cbfa8>, 0)>":	{
-                                                                                "_lock":	"<unlocked _thread.lock object at 0x7fa5015cbfa8>",
+                                                                            "<Condition(<unlocked _thread.lock object at 0x7f62ff072c38>, 0)>":	{
+                                                                                "_lock":	"<unlocked _thread.lock object at 0x7f62ff072c38>",
                                                                                 "_waiters":	"deque([])",
                                                                                 "acquire":	"acquire",
                                                                                 "release":	"release"
@@ -142,7 +142,7 @@
                                                                     }
                                                                 },
                                                                 "_target":	"_run",
-                                                                "_tstate_lock":	"<locked _thread.lock object at 0x7fa5015cbb20>"
+                                                                "_tstate_lock":	"<locked _thread.lock object at 0x7f62ff00c058>"
                                                             }
                                                         }
                                                     }
@@ -155,7 +155,7 @@
                                             "latch":	null,
                                             "message_data_sent":	0,
                                             "name":	"/pelican/command/roll_pitch_yawrate_thrust",
-                                            "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7fa5015d37e0>",
+                                            "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f62ff09db40>",
                                             "queue_size":	1,
                                             "ref_count":	1,
                                             "resolved_name":	"/pelican/command/roll_pitch_yawrate_thrust",
@@ -187,11 +187,11 @@
                             "angular_velocity_cost_weight":	0.01,
                             "attitude_cost_weight":	0.2,
                             "call_nlmpc":	{
-                                "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e6ac8>":	{
+                                "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62feffeef0>":	{
                                     "buff_size":	65536,
                                     "persistent":	false,
                                     "protocol":	{
-                                        "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e6dd8>":	{
+                                        "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62feffee80>":	{
                                             "buff_size":	65536,
                                             "direction":	"b",
                                             "headers":	{},
@@ -213,14 +213,14 @@
                             "closer_to_point_reward":	1.0,
                             "controllers_list":	[],
                             "controllers_object":	{
-                                "<openai_ros.controllers_connection.ControllersConnection object at 0x7fa5014e6160>":	{
+                                "<openai_ros.controllers_connection.ControllersConnection object at 0x7f62feffef98>":	{
                                     "controllers_list":	[],
                                     "switch_service":	{
-                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e61d0>":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62fef96208>":	{
                                             "buff_size":	65536,
                                             "persistent":	false,
                                             "protocol":	{
-                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e6240>":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62fef96ef0>":	{
                                                     "buff_size":	65536,
                                                     "direction":	"b",
                                                     "headers":	{},
@@ -257,13 +257,13 @@
                             "energy_cost_weight":	0.05,
                             "episode_num":	0,
                             "gazebo":	{
-                                "<openai_ros.gazebo_connection.GazeboConnection object at 0x7fa5014e62b0>":	{
+                                "<openai_ros.gazebo_connection.GazeboConnection object at 0x7f62feffe320>":	{
                                     "pause":	{
-                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e6a58>":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62feffe2e8>":	{
                                             "buff_size":	65536,
                                             "persistent":	false,
                                             "protocol":	{
-                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e6c50>":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62feffe0f0>":	{
                                                     "buff_size":	65536,
                                                     "direction":	"b",
                                                     "headers":	{},
@@ -283,11 +283,11 @@
                                         }
                                     },
                                     "reset_simulation_proxy":	{
-                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e6e80>":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62feffe390>":	{
                                             "buff_size":	65536,
                                             "persistent":	false,
                                             "protocol":	{
-                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e6198>":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62feffe160>":	{
                                                     "buff_size":	65536,
                                                     "direction":	"b",
                                                     "headers":	{},
@@ -308,11 +308,11 @@
                                     },
                                     "reset_world_or_sim":	"NO_RESET_SIM",
                                     "reset_world_proxy":	{
-                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e6128>":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62feffe198>":	{
                                             "buff_size":	65536,
                                             "persistent":	false,
                                             "protocol":	{
-                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e67b8>":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62feffe978>":	{
                                                     "buff_size":	65536,
                                                     "direction":	"b",
                                                     "headers":	{},
@@ -332,11 +332,11 @@
                                         }
                                     },
                                     "set_physics":	{
-                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e6780>":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62feffe3c8>":	{
                                             "buff_size":	65536,
                                             "persistent":	false,
                                             "protocol":	{
-                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e6400>":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62feffe128>":	{
                                                     "buff_size":	65536,
                                                     "direction":	"b",
                                                     "headers":	{},
@@ -357,11 +357,11 @@
                                     },
                                     "start_init_physics_parameters":	false,
                                     "unpause":	{
-                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014e6358>":	{
+                                        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62feffe6d8>":	{
                                             "buff_size":	65536,
                                             "persistent":	false,
                                             "protocol":	{
-                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e60f0>":	{
+                                                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62feffe5f8>":	{
                                                     "buff_size":	65536,
                                                     "direction":	"b",
                                                     "headers":	{},
@@ -387,7 +387,7 @@
                             "max_roll_pitch_angular_speed":	5.0,
                             "max_thrust":	20.0,
                             "max_yaw_angular_speed":	1.0,
-                            "np_random":	"<mtrand.RandomState object at 0x7fa5014b6bd0>",
+                            "np_random":	"<mtrand.RandomState object at 0x7f62fef83ca8>",
                             "observation_space":	{
                                 "Box(18,)":	{
                                     "dtype":	"float32",
@@ -398,7 +398,7 @@
                                     ]
                                 }
                             },
-                            "odom":	"header: \n  seq: 3419127\n  stamp: \n    secs: 34191\n    nsecs: 380000000\n  frame_id: \"world\"\nchild_frame_id: \"pelican/base_link\"\npose: \n  pose: \n    position: \n      x: -5.271513185487982\n      y: 6.617822881556599\n      z: 0.10796429736953574\n    orientation: \n      x: 0.24653217303783365\n      y: -0.9653647451978963\n      z: 0.08285693843324393\n      w: -0.02067665687954238\n  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\ntwist: \n  twist: \n    linear: \n      x: -1.076906796048322\n      y: 0.8672545575371021\n      z: 0.025249135835935285\n    angular: \n      x: -0.356177603938459\n      y: 2.2275103484502914\n      z: -9.737385399398764\n  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",
+                            "odom":	"header: \n  seq: 7494930\n  stamp: \n    secs: 74949\n    nsecs: 520000000\n  frame_id: \"world\"\nchild_frame_id: \"pelican/base_link\"\npose: \n  pose: \n    position: \n      x: -13.217366575969718\n      y: 14.635715225772438\n      z: 5.6378252508854\n    orientation: \n      x: 0.12370409360040525\n      y: -0.2556137633583103\n      z: -0.36038844103879625\n      w: 0.888526348947475\n  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\ntwist: \n  twist: \n    linear: \n      x: 2.5881187574968743\n      y: -2.1587481322423403\n      z: 0.38268397428920725\n    angular: \n      x: -0.786480271775038\n      y: -0.5229322303893453\n      z: -1.1384860755726003\n  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",
                             "position_cost_weight":	10.0,
                             "predefined_quat":	[
                                 {
@@ -556,35 +556,35 @@
                             ],
                             "publishers_array":	[
                                 {
-                                    "<rospy.topics.Publisher object at 0x7fa5014e0a20>":	{
+                                    "<rospy.topics.Publisher object at 0x7f62fef96278>":	{
                                         "data_class":	"RollPitchYawrateThrust",
                                         "impl":	{
-                                            "<rospy.topics._PublisherImpl object at 0x7fa5014e0470>":	{
-                                                "buff":	"<_io.BytesIO object at 0x7fa50154e620>",
-                                                "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7fa5015d36c0>",
+                                            "<rospy.topics._PublisherImpl object at 0x7f62fef96f60>":	{
+                                                "buff":	"<_io.BytesIO object at 0x7f62ff000eb8>",
+                                                "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f62ff09db70>",
                                                 "closed":	false,
                                                 "connection_poll":	{
-                                                    "<rospy.topics.Poller object at 0x7fa5014e08d0>":	{
+                                                    "<rospy.topics.Poller object at 0x7f62fef9b588>":	{
                                                         "add_fd":	"add_epoll",
                                                         "error_iter":	"error_epoll_iter",
-                                                        "poller":	"<select.epoll object at 0x7fa501538330>",
+                                                        "poller":	"<select.epoll object at 0x7f62feff0348>",
                                                         "remove_fd":	"remove_epoll"
                                                     }
                                                 },
                                                 "connections":	[
                                                     {
-                                                        "<rospy.impl.tcpros_pubsub.QueuedConnection object at 0x7fa501547e80>":	{
+                                                        "<rospy.impl.tcpros_pubsub.QueuedConnection object at 0x7f62fef96400>":	{
                                                             "_cond_data_available":	{
-                                                                "<Condition(<unlocked _thread.lock object at 0x7fa5015cbfd0>, 1)>":	{
-                                                                    "_lock":	"<unlocked _thread.lock object at 0x7fa5015cbfd0>",
-                                                                    "_waiters":	"deque([<locked _thread.lock object at 0x7fa501544030>])",
+                                                                "<Condition(<unlocked _thread.lock object at 0x7f62ff072b20>, 1)>":	{
+                                                                    "_lock":	"<unlocked _thread.lock object at 0x7f62ff072b20>",
+                                                                    "_waiters":	"deque([<locked _thread.lock object at 0x7f62ff00c080>])",
                                                                     "acquire":	"acquire",
                                                                     "release":	"release"
                                                                 }
                                                             },
                                                             "_connection":	{
-                                                                "<rospy.impl.tcpros_base.TCPROSTransport object at 0x7fa501547e48>":	{
-                                                                    "_fileno":	28,
+                                                                "<rospy.impl.tcpros_base.TCPROSTransport object at 0x7f62fef96860>":	{
+                                                                    "_fileno":	29,
                                                                     "callerid_pub":	"unknown",
                                                                     "cleanup_cb":	"cleanup_cb_wrapper",
                                                                     "dest_address":	null,
@@ -597,12 +597,12 @@
                                                                     "latch":	null,
                                                                     "local_endpoint":	[
                                                                         "127.0.1.1",
-                                                                        41005
+                                                                        44899
                                                                     ],
                                                                     "md5sum":	null,
                                                                     "name":	"/pelican/command/roll_pitch_yawrate_thrust",
                                                                     "protocol":	{
-                                                                        "<rospy.impl.tcpros_pubsub.TCPROSPub object at 0x7fa501547e10>":	{
+                                                                        "<rospy.impl.tcpros_pubsub.TCPROSPub object at 0x7f62fef966a0>":	{
                                                                             "buff_size":	128,
                                                                             "direction":	"o",
                                                                             "headers":	{},
@@ -613,36 +613,36 @@
                                                                             "resolved_name":	"/pelican/command/roll_pitch_yawrate_thrust"
                                                                         }
                                                                     },
-                                                                    "read_buff":	"<_io.BytesIO object at 0x7fa50154e410>",
+                                                                    "read_buff":	"<_io.BytesIO object at 0x7f62fefea468>",
                                                                     "remote_endpoint":	[
                                                                         "127.0.0.1",
-                                                                        43654
+                                                                        58268
                                                                     ],
-                                                                    "socket":	"<socket.socket fd=28, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.1.1', 41005), raddr=('127.0.0.1', 43654)>",
+                                                                    "socket":	"<socket.socket fd=29, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.1.1', 44899), raddr=('127.0.0.1', 58268)>",
                                                                     "stat_bytes":	2400,
                                                                     "stat_num_msg":	0,
                                                                     "type":	null,
-                                                                    "write_buff":	"<_io.BytesIO object at 0x7fa50154e048>"
+                                                                    "write_buff":	"<_io.BytesIO object at 0x7f62fefea308>"
                                                                 }
                                                             },
                                                             "_error":	null,
-                                                            "_lock":	"<unlocked _thread.lock object at 0x7fa5015cbfd0>",
+                                                            "_lock":	"<unlocked _thread.lock object at 0x7f62ff072b20>",
                                                             "_queue":	[],
                                                             "_queue_size":	1,
                                                             "_thread":	{
-                                                                "<Thread(Thread-10, started daemon 140346310784768)>":	{
+                                                                "<Thread(Thread-10, started daemon 140065272854272)>":	{
                                                                     "_args":	[],
                                                                     "_daemonic":	true,
-                                                                    "_ident":	140346310784768,
+                                                                    "_ident":	140065272854272,
                                                                     "_initialized":	true,
                                                                     "_is_stopped":	false,
                                                                     "_kwargs":	{},
                                                                     "_name":	"Thread-10",
                                                                     "_started":	{
-                                                                        "<threading.Event object at 0x7fa501547f28>":	{
+                                                                        "<threading.Event object at 0x7f62fef96978>":	{
                                                                             "_cond":	{
-                                                                                "<Condition(<unlocked _thread.lock object at 0x7fa5015cbfa8>, 0)>":	{
-                                                                                    "_lock":	"<unlocked _thread.lock object at 0x7fa5015cbfa8>",
+                                                                                "<Condition(<unlocked _thread.lock object at 0x7f62ff072c38>, 0)>":	{
+                                                                                    "_lock":	"<unlocked _thread.lock object at 0x7f62ff072c38>",
                                                                                     "_waiters":	"deque([])",
                                                                                     "acquire":	"acquire",
                                                                                     "release":	"release"
@@ -657,7 +657,7 @@
                                                                         }
                                                                     },
                                                                     "_target":	"_run",
-                                                                    "_tstate_lock":	"<locked _thread.lock object at 0x7fa5015cbb20>"
+                                                                    "_tstate_lock":	"<locked _thread.lock object at 0x7f62ff00c058>"
                                                                 }
                                                             }
                                                         }
@@ -670,7 +670,7 @@
                                                 "latch":	null,
                                                 "message_data_sent":	0,
                                                 "name":	"/pelican/command/roll_pitch_yawrate_thrust",
-                                                "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7fa5015d37e0>",
+                                                "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f62ff09db40>",
                                                 "queue_size":	1,
                                                 "ref_count":	1,
                                                 "resolved_name":	"/pelican/command/roll_pitch_yawrate_thrust",
@@ -691,18 +691,18 @@
                             "reset_controls":	false,
                             "reset_pos_steps":	0,
                             "reward_pub":	{
-                                "<rospy.topics.Publisher object at 0x7fa5014e60b8>":	{
+                                "<rospy.topics.Publisher object at 0x7f62fef96940>":	{
                                     "data_class":	"RLExperimentInfo",
                                     "impl":	{
-                                        "<rospy.topics._PublisherImpl object at 0x7fa5014e0080>":	{
-                                            "buff":	"<_io.BytesIO object at 0x7fa5015e2d58>",
-                                            "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7fa5015d3ae0>",
+                                        "<rospy.topics._PublisherImpl object at 0x7f62fef96f98>":	{
+                                            "buff":	"<_io.BytesIO object at 0x7f62ff082af0>",
+                                            "c_lock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f62ff09da50>",
                                             "closed":	false,
                                             "connection_poll":	{
-                                                "<rospy.topics.Poller object at 0x7fa5014e0a58>":	{
+                                                "<rospy.topics.Poller object at 0x7f62fef96be0>":	{
                                                     "add_fd":	"add_epoll",
                                                     "error_iter":	"error_epoll_iter",
-                                                    "poller":	"<select.epoll object at 0x7fa501573ac8>",
+                                                    "poller":	"<select.epoll object at 0x7f62ff020ac8>",
                                                     "remove_fd":	"remove_epoll"
                                                 }
                                             },
@@ -714,7 +714,7 @@
                                             "latch":	null,
                                             "message_data_sent":	0,
                                             "name":	"/openai/reward",
-                                            "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7fa5015d3630>",
+                                            "publock":	"<unlocked _thread.RLock object owner=0 count=0 at 0x7f62ff09d630>",
                                             "queue_size":	1,
                                             "ref_count":	1,
                                             "resolved_name":	"/openai/reward",
@@ -737,11 +737,11 @@
                             "robot_name_space":	"",
                             "s_dim":	18,
                             "set_model_state":	{
-                                "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fa5014cdfd0>":	{
+                                "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f62fef960f0>":	{
                                     "buff_size":	65536,
                                     "persistent":	false,
                                     "protocol":	{
-                                        "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fa5014e0048>":	{
+                                        "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f62fef96128>":	{
                                             "buff_size":	65536,
                                             "direction":	"b",
                                             "headers":	{},
@@ -808,7 +808,7 @@
             },
             "env_semantics_autoreset":	null,
             "episode_id":	0,
-            "file_infix":	"0.11330",
+            "file_infix":	"0.16129",
             "file_prefix":	"openaigym",
             "metadata":	{
                 "render.modes":	[]
@@ -828,7 +828,7 @@
                 Infinity
             ],
             "stats_recorder":	{
-                "<gym.wrappers.monitoring.stats_recorder.StatsRecorder object at 0x7fa5014baa58>":	{
+                "<gym.wrappers.monitoring.stats_recorder.StatsRecorder object at 0x7f62fef9b748>":	{
                     "_type":	"t",
                     "autoreset":	null,
                     "closed":	false,
@@ -838,9 +838,9 @@
                     "episode_lengths":	[],
                     "episode_rewards":	[],
                     "episode_types":	[],
-                    "file_prefix":	"openaigym.episode_batch.0.11330",
+                    "file_prefix":	"openaigym.episode_batch.0.16129",
                     "initial_reset_timestamp":	null,
-                    "path":	"/tmp/openai_ros_experiments/openaigym.episode_batch.0.11330.stats.json",
+                    "path":	"/tmp/openai_ros_experiments/openaigym.episode_batch.0.16129.stats.json",
                     "rewards":	null,
                     "steps":	null,
                     "timestamps":	[],
@@ -864,9 +864,9 @@
     },
     "output_activation":	"tanh",
     "self":	{
-        "<policy_core.Policy_Net object at 0x7fa501558128>":	{
+        "<policy_core.Policy_Net object at 0x7f62fef968d0>":	{
             "logger":	{
-                "<spinup.utils.logx.EpochLogger object at 0x7fa5015580f0>":	{
+                "<spinup.utils.logx.EpochLogger object at 0x7f62fef96cc0>":	{
                     "epoch_dict":	{},
                     "exp_name":	"Pelican_position_controller_dagger",
                     "first_row":	true,

@@ -85,11 +85,11 @@ def get_datasets(logdir, condition=None):
             units[condition1] += 1
 
             exp_data = pd.read_table(os.path.join(root,'progress.txt'))
-            performance = 'AverageTestEpRet' if 'AverageTestEpRet' in exp_data else 'AverageEpRet'
+            # performance = 'AverageTestEpRet' if 'AverageTestEpRet' in exp_data else 'AverageEpRet'
             exp_data.insert(len(exp_data.columns),'Unit',unit)
             exp_data.insert(len(exp_data.columns),'Condition1',condition1)
             exp_data.insert(len(exp_data.columns),'Condition2',condition2)
-            exp_data.insert(len(exp_data.columns),'Performance',exp_data[performance])
+            # exp_data.insert(len(exp_data.columns),'Performance',exp_data[performance])
             datasets.append(exp_data)
     return datasets
 

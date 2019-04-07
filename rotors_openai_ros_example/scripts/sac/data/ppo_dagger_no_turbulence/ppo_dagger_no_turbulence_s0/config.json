@@ -1,0 +1,72 @@
+{
+    "ac_kwargs":	{
+        "activation":	"tanh",
+        "hidden_sizes":	[
+            64,
+            64
+        ],
+        "output_activation":	null
+    },
+    "actor_critic":	"mlp_actor_critic",
+    "alpha":	0.2,
+    "batch_size":	64,
+    "dagger_epochs":	200,
+    "dagger_noise":	0.02,
+    "env_fn":	"<function <lambda> at 0x7f7234614b70>",
+    "epochs":	100000,
+    "exp_name":	"ppo_dagger_no_turbulence",
+    "expert":	{
+        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7f7234604828>":	{
+            "buff_size":	65536,
+            "persistent":	false,
+            "protocol":	{
+                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7f7234668c88>":	{
+                    "buff_size":	65536,
+                    "direction":	"b",
+                    "headers":	{},
+                    "queue_size":	null,
+                    "recv_data_class":	"MotorControllerServiceResponse",
+                    "resolved_name":	"/pelican/call_motor_controller",
+                    "service_class":	"MotorControllerService"
+                }
+            },
+            "request_class":	"MotorControllerServiceRequest",
+            "resolved_name":	"/pelican/call_motor_controller",
+            "response_class":	"MotorControllerServiceResponse",
+            "seq":	0,
+            "service_class":	"MotorControllerService",
+            "transport":	null,
+            "uri":	null
+        }
+    },
+    "gamma":	0.999,
+    "logger":	{
+        "<spinup.utils.logx.EpochLogger object at 0x7f7234668ac8>":	{
+            "epoch_dict":	{},
+            "exp_name":	"ppo_dagger_no_turbulence",
+            "first_row":	true,
+            "log_current_row":	{},
+            "log_headers":	[],
+            "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/sac/data/ppo_dagger_no_turbulence/ppo_dagger_no_turbulence_s0",
+            "output_file":	{
+                "<_io.TextIOWrapper name='/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/sac/data/ppo_dagger_no_turbulence/ppo_dagger_no_turbulence_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                    "mode":	"w"
+                }
+            }
+        }
+    },
+    "logger_kwargs":	{
+        "exp_name":	"ppo_dagger_no_turbulence",
+        "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/sac/data/ppo_dagger_no_turbulence/ppo_dagger_no_turbulence_s0"
+    },
+    "lr":	0.0001,
+    "max_ep_len":	500,
+    "policy_path":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/sac/data/sac_dagger/sac_dagger_s0",
+    "polyak":	0.995,
+    "pretrain_epochs":	50,
+    "replay_size":	5000,
+    "save_freq":	50,
+    "seed":	0,
+    "steps_per_epoch":	5000,
+    "update_steps":	10
+}

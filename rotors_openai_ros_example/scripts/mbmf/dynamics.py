@@ -73,6 +73,7 @@ class NNDynamicsModel():
         self._deltas = tf.placeholder(tf.float32, [None, self._state_dim])
         self._s_a = tf.concat([self._s, self._a], axis=1)
         self.delta_pred = feedforward_network(self._s_a, self._state_dim,'dynamics', n_layers=n_layers, size=size)
+        self.delta_true_mean = tf.reduce_mean(self._deltas)
         # self.delta_pred = build_mlp(self._s_a, self._state_dim, 'dynamics', n_layers=n_layers, size=size, activation = activation, output_activation=output_activation)
         self.pred_error = tf.reduce_mean(tf.reduce_sum(tf.square(self.delta_pred - self._deltas), reduction_indices = [1]))
         optimizer = tf.train.AdamOptimizer(learning_rate)
@@ -101,9 +102,9 @@ class NNDynamicsModel():
             batch_obs = normalized_obs[indices,:]
             batch_acts = normalized_actions[indices,:]
             batch_deltas = normalized_deltas[indices,:]
-            _, pred_err = self.sess.run([self.train_op, self.pred_error], feed_dict = {self._s: batch_obs, self._a: batch_acts, self._deltas: batch_deltas})
+            _, pred_err, mean_pre = self.sess.run([self.train_op, self.pred_error, self.delta_true_mean], feed_dict = {self._s: batch_obs, self._a: batch_acts, self._deltas: batch_deltas})
             if train_iter % 10 == 0:
-                print("train loop {} predicted error: {}".format(train_iter, pred_err))
+                print("train loop {} predicted error: {} true mean pre: {}".format(train_iter, pred_err, mean_pre))
 
     def predict(self, states, actions):
 

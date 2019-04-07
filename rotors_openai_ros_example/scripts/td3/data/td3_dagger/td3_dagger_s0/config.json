@@ -1,0 +1,77 @@
+{
+    "UPDATE_STEP":	10,
+    "ac_kwargs":	{
+        "activation":	"tanh",
+        "hidden_sizes":	[
+            64,
+            64
+        ],
+        "output_activation":	null
+    },
+    "act_noise":	0.02,
+    "actor_critic":	"mlp_actor_critic",
+    "batch_size":	64,
+    "dagger_epochs":	1000,
+    "dagger_noise":	0.02,
+    "env_fn":	"<function <lambda> at 0x7fd92bbcc488>",
+    "epochs":	0,
+    "exp_name":	"td3_dagger",
+    "expert":	{
+        "<rospy.impl.tcpros_service.ServiceProxy object at 0x7fd92bbc9be0>":	{
+            "buff_size":	65536,
+            "persistent":	false,
+            "protocol":	{
+                "<rospy.impl.tcpros_service.TCPROSServiceClient object at 0x7fd92bbc9f98>":	{
+                    "buff_size":	65536,
+                    "direction":	"b",
+                    "headers":	{},
+                    "queue_size":	null,
+                    "recv_data_class":	"MotorControllerServiceResponse",
+                    "resolved_name":	"/pelican/call_motor_controller",
+                    "service_class":	"MotorControllerService"
+                }
+            },
+            "request_class":	"MotorControllerServiceRequest",
+            "resolved_name":	"/pelican/call_motor_controller",
+            "response_class":	"MotorControllerServiceResponse",
+            "seq":	0,
+            "service_class":	"MotorControllerService",
+            "transport":	null,
+            "uri":	null
+        }
+    },
+    "gamma":	0.99,
+    "logger":	{
+        "<spinup.utils.logx.EpochLogger object at 0x7fd92bbc9ba8>":	{
+            "epoch_dict":	{},
+            "exp_name":	"td3_dagger",
+            "first_row":	true,
+            "log_current_row":	{},
+            "log_headers":	[],
+            "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/td3/data/td3_dagger/td3_dagger_s0",
+            "output_file":	{
+                "<_io.TextIOWrapper name='/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/td3/data/td3_dagger/td3_dagger_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                    "mode":	"w"
+                }
+            }
+        }
+    },
+    "logger_kwargs":	{
+        "exp_name":	"td3_dagger",
+        "output_dir":	"/home/zhuzd/ros_ws/src/openai_examples_projects/rotors_openai_ros_example/scripts/td3/data/td3_dagger/td3_dagger_s0"
+    },
+    "max_ep_len":	500,
+    "noise_clip":	0.5,
+    "pi_lr":	0.0001,
+    "policy_delay":	2,
+    "policy_path":	null,
+    "polyak":	0.995,
+    "pretrain_epochs":	50,
+    "q_lr":	0.0001,
+    "replay_size":	5000,
+    "save_freq":	50,
+    "seed":	0,
+    "start_epochs":	0,
+    "steps_per_epoch":	500,
+    "target_noise":	0.02
+}
