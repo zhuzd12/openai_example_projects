@@ -350,6 +350,7 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
 
     def test_agent(n=81, test_num=1):
         n = env.unwrapped._set_test_mode(True)
+        con_flag = False
         for j in range(n):
             o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
             while not(d or (ep_len == max_ep_len)):
@@ -360,14 +361,21 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
                 if d:
                     test_logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
                     test_logger.store(arrive_des=info['arrive_des'])
-                    test_logger.store(converge_dis=info['converge_dis'])
+                    test_logger.store(arrive_des_appro=info['arrive_des_appro'])
+                    if not info['out_of_range']:
+                        test_logger.store(converge_dis=info['converge_dis'])
+                        con_flag = True
                     test_logger.store(out_of_range=info['out_of_range'])
                     # print(info)
         # test_logger.dump_tabular()
+        # time.sleep(10)
+        if not con_flag:
+            test_logger.store(converge_dis=10000)
         env.unwrapped._set_test_mode(False)
 
     def ref_test_agent(n=81, test_num=1):
         n = env.unwrapped._set_test_mode(True)
+        con_flag = False
         for j in range(n):
             o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
             while not(d or (ep_len == max_ep_len)):
@@ -376,23 +384,30 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
                 o, r, d, info = env.step(a)
                 ep_ret += r
                 ep_len += 1
-
                 if d:
                     test_logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
                     test_logger.store(arrive_des=info['arrive_des'])
-                    test_logger.store(converge_dis=info['converge_dis'])
+                    test_logger.store(arrive_des_appro=info['arrive_des_appro'])
+                    if not info['out_of_range']:
+                        test_logger.store(converge_dis=info['converge_dis'])
+                        con_flag = True
                     test_logger.store(out_of_range=info['out_of_range'])
                     # print(info)
         # test_logger.dump_tabular()
+        if not con_flag:
+            test_logger.store(converge_dis=10000)
         env.unwrapped._set_test_mode(False)
-    ref_test_agent(test_num = -1)
-    test_logger.log_tabular('epoch', -1)
-    test_logger.log_tabular('TestEpRet', average_only=True)
-    test_logger.log_tabular('TestEpLen', average_only=True)
-    test_logger.log_tabular('arrive_des', average_only=True)
-    test_logger.log_tabular('converge_dis', average_only=True)
-    test_logger.log_tabular('out_of_range', average_only=True)
-    test_logger.dump_tabular()
+
+    # ref_test_agent(test_num = -1)
+    # test_logger.log_tabular('epoch', -1)
+    # test_logger.log_tabular('TestEpRet', average_only=True)
+    # test_logger.log_tabular('TestEpLen', average_only=True)
+    # test_logger.log_tabular('arrive_des', average_only=True)
+    # test_logger.log_tabular('arrive_des_appro', average_only=True)
+    # test_logger.log_tabular('converge_dis', average_only=True)
+    # test_logger.log_tabular('out_of_range', average_only=True)
+    # test_logger.dump_tabular()
+
 
 
     start_time = time.time()
@@ -415,6 +430,7 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
             test_logger.log_tabular('TestEpRet', average_only=True)
             test_logger.log_tabular('TestEpLen', average_only=True)
             test_logger.log_tabular('arrive_des', average_only=True)
+            test_logger.log_tabular('arrive_des_appro', average_only=True)
             test_logger.log_tabular('converge_dis', average_only=True)
             test_logger.log_tabular('out_of_range', average_only=True)
             test_logger.dump_tabular()
@@ -453,7 +469,7 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
             rewards.append(r)
 
             if (t == steps_per_epoch-1):
-                print ("reached the end")
+                # print ("reached the end")
                 d = True
 
             # Store experience to replay buffer
@@ -508,6 +524,7 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
             test_logger.log_tabular('TestEpRet', average_only=True)
             test_logger.log_tabular('TestEpLen', average_only=True)
             test_logger.log_tabular('arrive_des', average_only=True)
+            # test_logger.log_tabular('arrive_des_appro', average_only=True)
             test_logger.log_tabular('converge_dis', average_only=True)
             test_logger.log_tabular('out_of_range', average_only=True)
             test_logger.dump_tabular()
@@ -520,12 +537,12 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
             logger.log_tabular('TotalEnvInteracts', (epoch+1)*steps_per_epoch)
             logger.log_tabular('LossPi', average_only=True)
             logger.log_tabular('LossV', average_only=True)
-            logger.log_tabular('DeltaLossPi', average_only=True)
-            logger.log_tabular('DeltaLossV', average_only=True)
-            logger.log_tabular('Entropy', average_only=True)
-            logger.log_tabular('KL', average_only=True)
-            logger.log_tabular('ClipFrac', average_only=True)
-            logger.log_tabular('StopIter', average_only=True)
+            # logger.log_tabular('DeltaLossPi', average_only=True)
+            # logger.log_tabular('DeltaLossV', average_only=True)
+            # logger.log_tabular('Entropy', average_only=True)
+            # logger.log_tabular('KL', average_only=True)
+            # logger.log_tabular('ClipFrac', average_only=True)
+            # logger.log_tabular('StopIter', average_only=True)
             logger.log_tabular('Time', time.time()-start_time)
             logger.dump_tabular()
 
@@ -539,7 +556,7 @@ def sac(env_fn,  expert=None, policy_path=None, actor_critic=core.mlp_actor_crit
             ep_ret += r
             ep_len += 1
             if (t == steps_per_epoch-1):
-                print ("reached the end")
+                # print ("reached the end")
                 d = True
 
             replay_buffer.store(o, a, r, o2, d)
@@ -571,22 +588,22 @@ if __name__ == '__main__':
     rospy.init_node('pelican_attitude_controller_sac_training', anonymous=True, log_level=rospy.WARN)
     import argparse
     # default_fpath = osp.join(osp.abspath(osp.pardir),'data/Pelican_position_controller_dagger_for_ppo/Pelican_position_controller_dagger_for_ppo_s3')
-    default_fpath =  osp.join(osp.abspath(osp.dirname(__file__)),'data/sac_dagger/sac_dagger_s0')
+    default_fpath =  osp.join(osp.abspath(osp.dirname(__file__)),'data/sac_dagger_no_tbl/sac_dagger_no_tbl_s0')
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str, default='PelicanNavControllerEnv-v0')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.999)
-    parser.add_argument('--seed', '-s', type=int, default=0)
+    parser.add_argument('--seed', '-s', type=int, default=1)
     parser.add_argument('--cpu', type=int, default=4)
-    parser.add_argument('--steps', type=int, default=5000)
-    parser.add_argument('--epochs', type=int, default=100000)
+    parser.add_argument('--steps', type=int, default=500)
+    parser.add_argument('--epochs', type=int, default=10000)
     parser.add_argument('--dagger_epochs', type=int, default=0)
     parser.add_argument('--pretrain_epochs', type=int, default=50)
-    parser.add_argument('--save_freq', type=int, default=50)
-    parser.add_argument('--activation', type=str, default=tf.nn.tanh)
+    parser.add_argument('--save_freq', type=int, default=5)
+    parser.add_argument('--activation', type=str, default=tf.nn.relu)
     parser.add_argument('--output_activation', type=str, default=tf.nn.tanh)
-    parser.add_argument('--exp_name', type=str, default='sac_dagger')
+    parser.add_argument('--exp_name', type=str, default='sac_dagger_no_tbl')
     parser.add_argument('--itr', '-i', type=int, default=-1)
     parser.add_argument('--deterministic', '-d', action='store_true')
     parser.add_argument('--fpath', type=str, default=default_fpath)

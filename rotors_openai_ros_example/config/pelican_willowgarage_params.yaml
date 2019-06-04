@@ -10,7 +10,7 @@ pelican: #namespace
 
     n_actions: 4 # Forwards, Backwards, TurnLeft and TurnRight
     
-    propeller_high_speed: 3000 # High Propeller Speed             
+    propeller_high_speed: 1600 # High Propeller Speed             
     propeller_low_speed: 0.0 # Low Propeller Speed
     max_yaw_angular_speed: 1.0 # Maximum Base Turn Angular speed
     max_roll_pitch_angular_speed: 5.0 # Maximum Base roll/pitch Angular speed
@@ -34,14 +34,14 @@ pelican: #namespace
     propeller_hovering_speed: 0 # 508.76
     propeller_normalize_constant: 1000
 
-    energy_cost_weight: 0 #2.e-5
-    attitude_cost_weight: 4.e-3
+    energy_cost_weight: 2.e-15
+    attitude_cost_weight: 4.e-13
     angle_k: 2
     position_cost_weight: 2.e+0
-    angular_velocity_cost_weight: 0 #4.e-4
-    velocity_cost_weight: 0 #1.e-4
-    acc_cost_weight: 0 #2.e-4
+    angular_velocity_cost_weight: 4.e-14
+    velocity_cost_weight: 1.e-14
+    acc_cost_weight: 2.e-14
 
-    done_reward: 50.0 # reward
-    failed_reward: -0.0
+    done_reward: 0.0 # reward
+    failed_reward: -10.0
     closer_to_point_reward: 1.0 # reward

@@ -21,6 +21,7 @@ from spinup.utils.logx import EpochLogger
 from spinup.utils.logx import restore_tf_graph
 from spinup.utils.run_utils import setup_logger_kwargs
 import math
+from spinup.algos.sac.core import get_vars
 
 def load_policy(fpath, itr='last', deterministic=False, act_high=1):
 
@@ -461,7 +462,7 @@ def ppo(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
                     # print(info)
         # test_logger.dump_tabular()
         if not con_flag:
-            test_logger.store(arrive_des=10000)
+            test_logger.store(converge_dis=10000)
         env.unwrapped._set_test_mode(False)
 
     ref_test_agent(test_num = -1)
@@ -582,7 +583,7 @@ def ppo(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
     print(colorize("begin ppo training", 'green', bold=True))
     for epoch in range(1, epochs + 1, 1):
         # test policy
-        if epoch > 0 and (epoch % save_freq == 0) or (epoch == epochs):
+        if epoch > 0 and (epoch % save_freq == 0) or (epoch == epochs) or epoch == 1:
             # Save model
             logger.save_state({}, None)
             
@@ -604,7 +605,12 @@ def ppo(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
         env.unwrapped._set_test_mode(False)
         for t in range(local_steps_per_epoch):
             a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.array(o).reshape(1,-1)})
+            # a = a[0]
             # a = get_action_2(np.array(o))
+            # a = np.clip(a, act_low_limit, act_high_limit)
+            # if epoch < pretrain_epochs:
+            #     a = env.action_space.sample()
+            # a = np.clip(a, act_low_limit, act_high_limit)
             # save and log
             buf.store(o, a, r, v_t, logp_t)
             logger.store(VVals=v_t)
@@ -650,22 +656,22 @@ if __name__ == '__main__':
     rospy.init_node('pelican_attitude_controller_ppo_training', anonymous=True, log_level=rospy.WARN)
     import argparse
     # default_fpath = osp.join(osp.abspath(osp.pardir),'data/Pelican_position_controller_dagger_for_ppo/Pelican_position_controller_dagger_for_ppo_s3')
-    default_fpath = osp.join(osp.abspath(osp.dirname(__file__)),'data/ppo_dagger/ppo_dagger_s0')
+    default_fpath = osp.join(osp.abspath(osp.dirname(__file__)),'data/ppo_dagger/ppo_dagger_s15')
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str, default='PelicanNavControllerEnv-v0')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.999)
-    parser.add_argument('--seed', '-s', type=int, default=11)
+    parser.add_argument('--seed', type=int, default=7)
     parser.add_argument('--cpu', type=int, default=4)
-    parser.add_argument('--steps', type=int, default=5000)
+    parser.add_argument('--steps', type=int, default=20000)
     parser.add_argument('--epochs', type=int, default=10000)
     parser.add_argument('--dagger_epochs', type=int, default=0)
-    parser.add_argument('--pretrain_epochs', type=int, default=0)
-    parser.add_argument('--save_freq', type=int, default=0)
+    parser.add_argument('--pretrain_epochs', type=int, default=10)
+    parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--activation', type=str, default=tf.nn.relu)
     parser.add_argument('--output_activation', type=str, default=tf.nn.tanh)
-    parser.add_argument('--exp_name', type=str, default='ppo_dagger_with_turbulence')
+    parser.add_argument('--exp_name', type=str, default='ppo_dagger_no_tbl')
     parser.add_argument('--itr', '-i', type=int, default=-1)
     parser.add_argument('--deterministic', '-d', action='store_true')
     parser.add_argument('--fpath', type=str, default=default_fpath)

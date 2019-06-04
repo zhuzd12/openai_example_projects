@@ -184,6 +184,10 @@ def td3(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
 
     logger = EpochLogger(**logger_kwargs)
     logger.save_config(locals())
+    test_logger_kwargs = dict()
+    test_logger_kwargs['output_dir'] = osp.join(logger_kwargs['output_dir'], "test")
+    test_logger_kwargs['exp_name'] = logger_kwargs['exp_name']
+    test_logger = EpochLogger(**test_logger_kwargs)
 
     # test_logger_kwargs = dict()
     # test_logger_kwargs['output_dir'] = osp.join(logger_kwargs['output_dir'], "test")
@@ -331,20 +335,29 @@ def td3(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
             a = a + noise
         return np.clip(a, act_low_limit, act_high_limit)
 
-    def test_agent(n=91, test_num=1):
+    def test_agent(n=81, test_num=1):
         n = env.unwrapped._set_test_mode(True)
+        con_flag = False
         for j in range(n):
             o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
             while not(d or (ep_len == max_ep_len)):
                 # Take deterministic actions at test time (noise_scale=0)
-                o, r, d, _ = env.step(get_action(np.array(o), 0))
+                o, r, d, info = env.step(choose_action(np.array(o), 0))
                 ep_ret += r
                 ep_len += 1
-            # m, s = divmod(int(time.time() - start_time), 60)
-            # h, m = divmod(m, 60)
-            # print("EP " + str(j) + " - {} test number".format(test_num) + " - CReward: " + str(round(ep_ret, 4)) + "  Time: %d:%02d:%02d" % (h, m, s))
-            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
+                if d:
+                    test_logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
+                    test_logger.store(arrive_des=info['arrive_des'])
+                    test_logger.store(arrive_des_appro=info['arrive_des_appro'])
+                    if not info['out_of_range']:
+                        test_logger.store(converge_dis=info['converge_dis'])
+                        con_flag = True
+                    test_logger.store(out_of_range=info['out_of_range'])
+                    # print(info)
         # test_logger.dump_tabular()
+        # time.sleep(10)
+        if not con_flag:
+            test_logger.store(converge_dis=10000)
         env.unwrapped._set_test_mode(False)
 
 
@@ -383,7 +396,7 @@ def td3(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
             o = o2
 
             if (t == steps_per_epoch-1):
-                print ("reached the end")
+                # print ("reached the end")
                 d = True
             
             if d:
@@ -435,24 +448,38 @@ def td3(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
             test_agent(test_num=test_num)
 
             # Log info about epoch
-            logger.log_tabular('Epoch', epoch)
-            logger.log_tabular('EpRet', with_min_and_max=True)
-            logger.log_tabular('TestEpRet', with_min_and_max=True)
-            logger.log_tabular('EpLen', average_only=True)
-            logger.log_tabular('TestEpLen', average_only=True)
-            logger.log_tabular('TotalEnvInteracts', total_env_t)
-            logger.log_tabular('Q1Vals', with_min_and_max=True)
-            logger.log_tabular('Q2Vals', with_min_and_max=True)
-            logger.log_tabular('LossPi', average_only=True)
-            logger.log_tabular('LossQ', average_only=True)
-            logger.log_tabular('Time', time.time()-start_time)
-            logger.dump_tabular()
+            test_logger.log_tabular('epoch', epoch)
+            test_logger.log_tabular('TestEpRet', average_only=True)
+            test_logger.log_tabular('TestEpLen', average_only=True)
+            test_logger.log_tabular('arrive_des', average_only=True)
+            test_logger.log_tabular('converge_dis', average_only=True)
+            test_logger.log_tabular('out_of_range', average_only=True)
+            test_logger.dump_tabular()
 
     sess.run(target_init)
     print(colorize("begin td3 training", 'green', bold=True))
     # Main loop: collect experience in env and update/log each epoch
     # total_env_t = 0
     for epoch in range(1, epochs + 1, 1):
+
+        # End of epoch wrap-up
+        if epoch > 0 and (epoch % save_freq == 0) or (epoch == epochs):
+
+            # Save model
+            logger.save_state({}, None)
+
+            # Test the performance of the deterministic version of the agent.
+            test_num += 1
+            test_agent(test_num=test_num)
+
+            # Log info about epoch
+            test_logger.log_tabular('epoch', epoch)
+            test_logger.log_tabular('TestEpRet', average_only=True)
+            test_logger.log_tabular('TestEpLen', average_only=True)
+            test_logger.log_tabular('arrive_des', average_only=True)
+            test_logger.log_tabular('converge_dis', average_only=True)
+            test_logger.log_tabular('out_of_range', average_only=True)
+            test_logger.dump_tabular()
 
         """
         Until start_steps have elapsed, randomly sample actions
@@ -487,7 +514,7 @@ def td3(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
             o = o2
 
             if (t == steps_per_epoch-1):
-                print ("reached the end")
+                # print ("reached the end")
                 d = True
 
             if d:
@@ -518,29 +545,7 @@ def td3(env_fn, expert=None, policy_path=None, actor_critic=core.mlp_actor_criti
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
                 break
 
-        # End of epoch wrap-up
-        if epoch > 0 and (epoch % save_freq == 0) or (epoch == epochs):
-
-            # Save model
-            logger.save_state({}, None)
-
-            # Test the performance of the deterministic version of the agent.
-            test_num += 1
-            test_agent(test_num=test_num)
-
-            # Log info about epoch
-            logger.log_tabular('Epoch', epoch)
-            logger.log_tabular('EpRet', with_min_and_max=True)
-            logger.log_tabular('TestEpRet', with_min_and_max=True)
-            logger.log_tabular('EpLen', average_only=True)
-            logger.log_tabular('TestEpLen', average_only=True)
-            logger.log_tabular('TotalEnvInteracts', total_env_t)
-            logger.log_tabular('Q1Vals', with_min_and_max=True)
-            logger.log_tabular('Q2Vals', with_min_and_max=True)
-            logger.log_tabular('LossPi', average_only=True)
-            logger.log_tabular('LossQ', average_only=True)
-            logger.log_tabular('Time', time.time()-start_time)
-            logger.dump_tabular()
+        
 
 if __name__ == '__main__':
     rospy.init_node('pelican_attitude_controller_td3_training', anonymous=True, log_level=rospy.WARN)
@@ -553,13 +558,13 @@ if __name__ == '__main__':
     parser.add_argument('--activation', type=str, default=tf.tanh)
     parser.add_argument('--output_activation', type=str, default=None)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--seed', '-s', type=int, default=0)
-    parser.add_argument('--epochs', type=int, default=50000)
+    parser.add_argument('--seed', '-s', type=int, default=2)
+    parser.add_argument('--epochs', type=int, default=5000)
     parser.add_argument('--start_epochs', type=int, default=0)
-    parser.add_argument('--dagger_epochs', type=int, default=1500)
+    parser.add_argument('--dagger_epochs', type=int, default=0)
     parser.add_argument('--pretrain_epochs', type=int, default=100)
     parser.add_argument('--save_freq', type=int, default=50)
-    parser.add_argument('--exp_name', type=str, default='td3_dagger_with_pretrained_model')
+    parser.add_argument('--exp_name', type=str, default='td3_dagger_no_turbulence')
     args = parser.parse_args()
 
     from spinup.utils.run_utils import setup_logger_kwargs
@@ -570,7 +575,7 @@ if __name__ == '__main__':
     env = gym.make(args.env)
     # env = gym.wrappers.Monitor(env, outdir, force=True)
     ref_controller = rospy.ServiceProxy('/pelican/call_motor_controller', MotorControllerService)
-    td3(lambda : env, policy_path=None, expert=ref_controller, actor_critic=core.mlp_actor_critic,
+    td3(lambda : env, policy_path=default_fpath, expert=ref_controller, actor_critic=core.mlp_actor_critic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l, activation=args.activation, output_activation=args.output_activation),
         gamma=args.gamma, seed=args.seed, epochs=args.epochs,start_epochs=args.start_epochs, dagger_epochs=args.dagger_epochs, pretrain_epochs=args.pretrain_epochs,
         save_freq=args.save_freq, logger_kwargs=logger_kwargs)
